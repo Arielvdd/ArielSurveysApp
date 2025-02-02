@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "556517611536",
+    "project_id": "arielsurveysappdb",
+    "storage_bucket": "arielsurveysappdb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556517611536:android:8f35863053cada9c449295",
+        "android_client_info": {
+          "package_name": "com.example.arielsurveysapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy91mLkn1mgmmfcoN1ysxqi-zGyXiBdO0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
