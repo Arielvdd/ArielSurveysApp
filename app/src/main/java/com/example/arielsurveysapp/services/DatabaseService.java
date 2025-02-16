@@ -5,7 +5,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.arielsurveysapp.model.Question;
+import com.example.arielsurveysapp.model.Student;
 import com.example.arielsurveysapp.model.Survey;
+import com.example.arielsurveysapp.model.Teacher;
 import com.example.arielsurveysapp.model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -68,12 +70,30 @@ public class DatabaseService {
         return databaseReference.child(path).push().getKey();
     }
 
-    public void createNewUser(@NotNull final User user, @Nullable final DatabaseCallback<Void> callback) {
-        writeData("users/" + user.getEmail(), user, callback);
+
+
+    /// generate a new id for a new food in the database
+    /// @return a new id for the food
+    /// @see #generateNewId(String)
+    /// @see Food
+    public String generateSurveyId() {
+        return generateNewId("surveys");
+    }
+
+
+
+
+    public void createNewStudent(@NotNull final Student student, @Nullable final DatabaseCallback<Void> callback) {
+        writeData("students/" + student.getId(), student, callback);
+    }
+
+
+    public void createNewTeacher(@NotNull final Teacher teacher, @Nullable final DatabaseCallback<Void> callback) {
+        writeData("teachers/" + teacher.getId(), teacher, callback);
     }
 
     public void createNewSurvey(@NotNull final Survey survey, @Nullable final DatabaseCallback<Void> callback) {
-        writeData("surveys/" + survey.getTitle(), survey, callback);
+        writeData("surveys/" + survey.getId(), survey, callback);
     }
 
     public void createNewQuestion(@NotNull final Question question, @Nullable final DatabaseCallback<Void> callback) {
@@ -135,7 +155,7 @@ public class DatabaseService {
             callback.onCompleted(questions);
         });
     }
-
+    /*
     public void assignSurveyToUser(@NotNull final String userEmail, @NotNull final String surveyTitle, @Nullable final DatabaseCallback<Void> callback) {
         readData("users/" + userEmail).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -149,4 +169,6 @@ public class DatabaseService {
             }
         });
     }
+    */
+
 }

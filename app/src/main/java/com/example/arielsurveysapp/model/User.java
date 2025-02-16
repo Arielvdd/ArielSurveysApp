@@ -6,8 +6,6 @@ import java.util.List;
 public class User {
     private String id;
 
-    public User() {
-    }
 
     private String fName;
     private String lName;
@@ -16,6 +14,10 @@ public class User {
     private String email;
     private String password;
 
+
+
+    public User() {
+    }
 
     public User(String id, String fName, String lName, String gender, String phone, String email, String password) {
         this.id = id;
@@ -58,6 +60,7 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
     public String getPhone() {
         return phone;
     }
@@ -80,5 +83,18 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", fName='" + fName + '\'' +
+                ", lName='" + lName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

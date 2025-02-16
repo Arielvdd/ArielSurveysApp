@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.arielsurveysapp.model.User;
+import com.example.arielsurveysapp.utils.SharedPreferencesUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etEmail, etPassword;
     Button btnLog;
     FirebaseAuth mAuth;
+    User user=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,12 @@ public class LoginActivity extends AppCompatActivity {
         btnLog = findViewById(R.id.btnLogin);
 
         mAuth = FirebaseAuth.getInstance();
+        user= SharedPreferencesUtil.getUser(LoginActivity.this);
+        if(user!=null){
+
+            etEmail.setText(user.getEmail());
+            etPassword.setText(user.getPassword());
+        }
 
         btnLog.setOnClickListener(v -> loginUser());
     }

@@ -9,6 +9,9 @@ public class Student extends User {
         this.section = section;
     }
 
+    public Student() {
+    }
+
     public String getStudentClass() {
         return studentClass;
     }
@@ -24,4 +27,14 @@ public class Student extends User {
     public void setSection(String section) {
         this.section = section;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentClass='" + studentClass + '\'' +
+                ", section='" + section + '\'' +
+                '}';
+    }
+
+
 }

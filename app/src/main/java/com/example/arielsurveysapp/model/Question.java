@@ -4,14 +4,17 @@ import java.util.List;
 
 
 public class Question {
+    private String id;
     private String questionText;
     private List<String> options;
-    private String correctAnswer;
 
-    public Question(String questionText, List<String> options, String correctAnswer) {
+    public Question(String id, String questionText, List<String> options) {
+        this.id = id;
         this.questionText = questionText;
         this.options = options;
-        this.correctAnswer = correctAnswer;
+    }
+
+    public Question() {
     }
 
     public String getQuestionText() {
@@ -30,12 +33,21 @@ public class Question {
         this.options = options;
     }
 
-    public String getCorrectAnswer() {
-        return correctAnswer;
+    public String getId() {
+        return id;
     }
 
-    public void setCorrectAnswer(String correctAnswer) {
-        this.correctAnswer = correctAnswer;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id='" + id + '\'' +
+                ", questionText='" + questionText + '\'' +
+                ", options=" + options +
+                '}';
     }
 }
 

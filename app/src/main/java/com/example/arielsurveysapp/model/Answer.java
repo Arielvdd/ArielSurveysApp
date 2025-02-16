@@ -1,24 +1,20 @@
 package com.example.arielsurveysapp.model;
 
 public class Answer {
-    private String answerId;
+
+    private String surveyId;
+
     private String questionId;
+
+
     private String studentId;
     private String answerText;
 
-    public Answer(String answerId, String questionId, String studentId, String answerText) {
-        this.answerId = answerId;
+    public Answer( String questionId, String studentId, String answerText) {
+
         this.questionId = questionId;
         this.studentId = studentId;
         this.answerText = answerText;
-    }
-
-    public String getAnswerId() {
-        return answerId;
-    }
-
-    public void setAnswerId(String answerId) {
-        this.answerId = answerId;
     }
 
     public String getQuestionId() {
