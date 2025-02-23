@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.arielsurveysapp.model.Teacher;
 import com.example.arielsurveysapp.model.User;
 import com.example.arielsurveysapp.utils.SharedPreferencesUtil;
 import com.google.android.gms.tasks.OnCompleteListener;

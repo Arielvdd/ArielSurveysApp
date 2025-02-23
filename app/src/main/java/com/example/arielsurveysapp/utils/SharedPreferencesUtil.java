@@ -14,7 +14,7 @@ public class SharedPreferencesUtil {
 
     /// The name of the shared preferences file
     /// @see Context#getSharedPreferences(String, int)
-    private static final String PREF_NAME = "com.example.testapp.PREFERENCE_FILE_KEY";
+    private static final String PREF_NAME = "com.example.SurveysApp.PREFERENCE_FILE_KEY";
 
     /// Save a string to shared preferences
     /// @param context The context to use
@@ -112,7 +112,19 @@ public class SharedPreferencesUtil {
         editor.putString("phone", user.getPhone());
         editor.apply();
     }
-
+    /*
+    public static void setUserType(Context context,int role) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if(role == 1) {
+            editor.putString("role","student");
+        }
+        else if(role == 2) {
+            editor.putString("role","teacher");
+        }
+        editor.apply();
+    }
+    */
     /// Get the user object from shared preferences
     /// @param context The context to use
     /// @return The user object stored in shared preferences
@@ -130,7 +142,7 @@ public class SharedPreferencesUtil {
         String fName = sharedPreferences.getString("fName", "");
         String lName = sharedPreferences.getString("lName", "");
         String phone = sharedPreferences.getString("phone", "");
-        return new User(uid, fName, lName, phone, email, password,"");
+        return new User(uid, fName, lName,"", phone, email,password);
     }
 
     /// Sign out the user by removing user data from shared preferences

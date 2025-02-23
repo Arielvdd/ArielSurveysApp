@@ -26,21 +26,26 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnLogin = findViewById(R.id.btnLogin);
         Button btnRegister = findViewById(R.id.btnRegister);
+        Button btnTeachersRegister = findViewById(R.id.btnTeachersRegister);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener buttonClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                if (v.getId() == R.id.btnLogin) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                } else if (v.getId() == R.id.btnRegister) {
+                    Intent intent = new Intent(MainActivity.this, RegisterStudentActivity.class);
+                    startActivity(intent);
+                } else if (v.getId() == R.id.btnTeachersRegister) {
+                    Intent intent = new Intent(MainActivity.this, RegisterTeacherActivity.class);
+                    startActivity(intent);
+                }
             }
-        });
+        };
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterStudentActivity.class);
-                startActivity(intent);
-            }
-        });
+        btnLogin.setOnClickListener(buttonClickListener);
+        btnRegister.setOnClickListener(buttonClickListener);
+        btnTeachersRegister.setOnClickListener(buttonClickListener);
     }
 }

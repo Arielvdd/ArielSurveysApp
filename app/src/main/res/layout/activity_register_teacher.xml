@@ -7,41 +7,42 @@
     android:layout_height="match_parent"
     android:background="#f5f5f5"
     android:textDirection="rtl"
-    tools:context=".RegisterStudentActivity">
+    tools:context=".RegisterTeacherActivity">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:text="צור חשבון"
+        android:layout_marginTop="35dp"
+        android:text="צור חשבון מורה"
         android:textColor="#333333"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/etFname"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvFname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="101dp"
+        android:layout_marginTop="76dp"
         android:text="שם פרטי"
         android:textColor="#333333"
-        app:layout_constraintEnd_toEndOf="@+id/etFname"
+        app:layout_constraintEnd_toEndOf="@+id/etFnameT"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/etFname"
+        android:id="@+id/etFnameT"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
         android:background="@drawable/rounded_et"
         android:hint="הזן את שמך הפרטי"
         android:inputType="textPersonName"
         android:padding="12dp"
-        android:textColor="#333333"
 
+        android:textColor="#333333"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,19 +53,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="5dp"
         android:text="שם משפחה"
         android:textColor="#333333"
-        app:layout_constraintBottom_toTopOf="@+id/etLname"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/radioGroupGender" />
+        app:layout_constraintStart_toEndOf="@+id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@+id/etFnameT" />
 
     <EditText
-        android:id="@+id/etLname"
+        android:id="@+id/etLnameT"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/rounded_et"
         android:hint="הזן את שם המשפחה"
         android:inputType="textPersonName"
@@ -73,7 +74,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFname" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLname" />
 
     <TextView
         android:id="@+id/tvPhone"
@@ -81,14 +82,14 @@
         android:layout_height="wrap_content"
 
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginBottom="2dp"
         android:text="טלפון"
         android:textColor="#333333"
-        app:layout_constraintBottom_toTopOf="@+id/etPhone"
+        app:layout_constraintBottom_toTopOf="@+id/etPhoneT"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/etPhone"
+        android:id="@+id/etPhoneT"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="29dp"
@@ -100,7 +101,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etLname" />
+        app:layout_constraintTop_toBottomOf="@+id/etLnameT" />
 
     <TextView
         android:id="@+id/tvEmail"
@@ -108,16 +109,16 @@
         android:layout_height="wrap_content"
 
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="4dp"
         android:text="דואל"
         android:textColor="#333333"
-        app:layout_constraintBottom_toTopOf="@+id/etEmail"
+        app:layout_constraintBottom_toTopOf="@+id/etEmailT"
         app:layout_constraintEnd_toEndOf="parent">
 
     </TextView>
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etEmailT"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="31dp"
@@ -129,7 +130,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/etPhoneT" />
 
     <TextView
         android:id="@+id/tvPassword"
@@ -137,16 +138,16 @@
         android:layout_height="wrap_content"
 
         android:layout_marginEnd="9dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="4dp"
         android:text="סיסמה"
         android:textColor="#333333"
-        app:layout_constraintBottom_toTopOf="@+id/etPassword"
+        app:layout_constraintBottom_toTopOf="@+id/etPasswordT"
         app:layout_constraintEnd_toEndOf="parent">
 
     </TextView>
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etPasswordT"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="29dp"
@@ -159,7 +160,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/etEmailT" />
 
     <TextView
         android:id="@+id/tvGender"
@@ -167,92 +168,48 @@
         android:layout_height="wrap_content"
 
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="4dp"
-        android:text="מין  "
+        android:layout_marginEnd="11dp"
+        android:text="מין"
         android:textColor="#333333"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etPasswordT" />
+
 
     <RadioGroup
-        android:id="@+id/radioGroupGender"
+        android:id="@+id/radioGroupGenderT"
         android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="14dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerClass"
-        app:layout_constraintEnd_toStartOf="@+id/spinnerClass"
-        app:layout_constraintStart_toStartOf="@+id/spinnerClass"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword">
+        app:layout_constraintBottom_toTopOf="@+id/tvSubject"
+        app:layout_constraintEnd_toStartOf="@+id/tvGender"
+        app:layout_constraintTop_toTopOf="@+id/tvGender">
 
         <RadioButton
-            android:id="@+id/rbFemale"
+            android:id="@+id/rbFemaleT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="9dp"
+            android:layout_marginEnd="10dp"
             android:text="נקבה"
-            android:textColor="#333333" />
+            android:textColor="#333333"
+            app:layout_constraintBottom_toBottomOf="@+id/tvGender"
+            app:layout_constraintEnd_toStartOf="@+id/tvGender"
+            app:layout_constraintTop_toBottomOf="@+id/tvGender"
+            app:layout_constraintVertical_bias="0.875" />
 
         <RadioButton
-            android:id="@+id/rbMale"
+            android:id="@+id/rbMaleT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
             android:text="זכר"
             android:textColor="#333333" />
+
     </RadioGroup>
 
-
-    <TextView
-        android:id="@+id/tvStudentClass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:text="שכבה"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/spinnerClass"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinnerClass"
-        android:layout_width="75dp"
-        android:dropDownWidth="75dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="55dp"
-        android:entries="@array/arrClass"
-        app:layout_constraintEnd_toEndOf="@+id/tvStudentClass"
-        app:layout_constraintStart_toEndOf="@+id/tvSection"
-        app:layout_constraintTop_toBottomOf="@+id/tvGender" />
-
-    <TextView
-        android:id="@+id/tvSection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:text="כיתה"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupGender" />
-
-    <Spinner
-        android:id="@+id/spinnerSection"
-        android:layout_width="75dp"
-        android:dropDownWidth="75dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="114dp"
-        android:layout_marginEnd="114dp"
-        android:entries="@array/arrSection"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvSection"
-        app:layout_constraintEnd_toStartOf="@+id/spinnerClass"
-        app:layout_constraintStart_toStartOf="@+id/etPassword" />
-
     <Button
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnRegisterT"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="22dp"
@@ -262,6 +219,37 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="תחום הלימוד"
+        android:textColor="#333333"
+        app:layout_constraintBottom_toTopOf="@+id/etSubjectT"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/etSubjectT"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="143dp"
+        android:layout_marginBottom="144dp"
+        android:background="@drawable/rounded_et"
+        android:hint="הזן את תחום הלימוד"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textColor="#333333"
+        android:textDirection="ltr"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etPasswordT" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

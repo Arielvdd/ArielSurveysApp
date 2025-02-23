@@ -1,71 +1,58 @@
 package com.example.arielsurveysapp;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.arielsurveysapp.model.Student;
-import com.example.arielsurveysapp.model.User;
+import com.example.arielsurveysapp.model.Teacher;
 import com.example.arielsurveysapp.services.AuthenticationService;
 import com.example.arielsurveysapp.services.DatabaseService;
 import com.example.arielsurveysapp.utils.SharedPreferencesUtil;
 
-public class RegisterStudentActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class RegisterTeacherActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText etFname, etLname, etPhone, etEmail, etPassword;
+    private EditText etFname, etLname, etPhone, etEmail, etPassword, etSubject;
     private RadioGroup radioGroupGender;
     private RadioButton rbMale, rbFemale;
     private Button btnRegister;
     private AuthenticationService authenticationService;
     private DatabaseService databaseService;
 
-    private Spinner spSection, spStudentClass;
-
-    private String section,studentClass;
-
-    private static final String TAG = "RegisterStudentActivity";
+    private static final String TAG = "RegisterTeacherActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_student);
+        setContentView(R.layout.activity_register_teacher);
 
         authenticationService = AuthenticationService.getInstance();
         databaseService = DatabaseService.getInstance();
 
         initViews();
-
-
     }
 
     private void initViews() {
-        etFname = findViewById(R.id.etFname);
-        etLname = findViewById(R.id.etLname);
-        etPhone = findViewById(R.id.etPhone);
-        etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
+        etFname = findViewById(R.id.etFnameT);
+        etLname = findViewById(R.id.etLnameT);
+        etPhone = findViewById(R.id.etPhoneT);
+        etEmail = findViewById(R.id.etEmailT);
+        etPassword = findViewById(R.id.etPasswordT);
+        etSubject = findViewById(R.id.etSubjectT);
 
-        radioGroupGender = findViewById(R.id.radioGroupGender);
-        rbMale = findViewById(R.id.rbMale);
-        rbFemale = findViewById(R.id.rbFemale);
+        radioGroupGender = findViewById(R.id.radioGroupGenderT);
+        rbMale = findViewById(R.id.rbMaleT);
+        rbFemale = findViewById(R.id.rbFemaleT);
 
-        btnRegister = findViewById(R.id.btnRegister);
+        btnRegister = findViewById(R.id.btnRegisterT);
         btnRegister.setOnClickListener(this);
-
-        spSection = findViewById(R.id.spinnerSection);
-        spStudentClass = findViewById(R.id.spinnerClass);
-        spStudentClass.setOnItemSelectedListener(this);
     }
 
     private String getSelectedGender() {
@@ -78,7 +65,7 @@ public class RegisterStudentActivity extends AppCompatActivity implements View.O
         return "";
     }
 
-    private boolean isValidInput(String firstName, String lastName, String phone, String email, String password, String gender) {
+    private boolean isValidInput(String firstName, String lastName, String phone, String email, String password, String gender, String subject) {
         if (firstName.isEmpty()) {
             showToast("First name is required");
             return false;
@@ -115,12 +102,15 @@ public class RegisterStudentActivity extends AppCompatActivity implements View.O
             showToast("Please select a gender");
             return false;
         }
-
+        if (subject.isEmpty()) {
+            showToast("Subject is required");
+            return false;
+        }
         return true;
     }
 
     private void showToast(String message) {
-        Toast.makeText(RegisterStudentActivity.this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(RegisterTeacherActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     private boolean isValidEmail(String email) {
@@ -131,30 +121,23 @@ public class RegisterStudentActivity extends AppCompatActivity implements View.O
         return phone.length() == 10 && phone.startsWith("05");
     }
 
-
     @Override
     public void onClick(View v) {
+        String firstName = etFname.getText().toString();
+        String lastName = etLname.getText().toString();
+        String phone = etPhone.getText().toString();
+        String email = etEmail.getText().toString();
+        String password = etPassword.getText().toString();
+        String gender = getSelectedGender();
+        String subject = etSubject.getText().toString();
 
-
-            String firstName = etFname.getText().toString();
-            String lastName = etLname.getText().toString();
-            String phone = etPhone.getText().toString();
-            String email = etEmail.getText().toString();
-            String password = etPassword.getText().toString();
-            String gender = getSelectedGender();
-
-            section = spSection.getSelectedItem().toString();
-
-            if (isValidInput(firstName, lastName, phone, email, password, gender)) {
-                registerUser(firstName, lastName, phone, email, password, gender);
-            }
-
-
+        if (isValidInput(firstName, lastName, phone, email, password, gender, subject)) {
+            registerUser(firstName, lastName, phone, email, password, gender, subject);
+        }
     }
 
-
-    private void registerUser(String firstName, String lastName, String phone, String email, String password, String gender) {
-        Log.d(TAG, "registerUser: Registering user...");
+    private void registerUser(String firstName, String lastName, String phone, String email, String password, String gender, String subject) {
+        Log.d(TAG, "registerUser: Registering teacher...");
 
         authenticationService.signUp(email, password, new AuthenticationService.AuthCallback<String>() {
 
@@ -162,19 +145,17 @@ public class RegisterStudentActivity extends AppCompatActivity implements View.O
             public void onCompleted(String uid) {
                 Log.d(TAG, "onCompleted: User registered successfully");
 
+                Teacher teacher = new Teacher(uid, firstName, lastName, phone, email, password, gender, subject);
 
-
-                    Student student = new Student(uid, firstName, lastName,phone, email, password,gender,studentClass,section);
-
-                databaseService.createNewStudent(student, new DatabaseService.DatabaseCallback<Void>() {
+                databaseService.createNewTeacher(teacher, new DatabaseService.DatabaseCallback<Void>() {
 
                     @Override
                     public void onCompleted(Void object) {
                         Log.d(TAG, "onCompleted: User saved to database");
-                        SharedPreferencesUtil.saveUser(RegisterStudentActivity.this,student);
+                        SharedPreferencesUtil.saveUser(RegisterTeacherActivity.this, teacher);
 
                         // Redirect to MainActivity after successful registration
-                        Intent mainIntent = new Intent(RegisterStudentActivity.this, MainActivity.class);
+                        Intent mainIntent = new Intent(RegisterTeacherActivity.this, MainActivity.class);
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(mainIntent);
                     }
@@ -193,15 +174,5 @@ public class RegisterStudentActivity extends AppCompatActivity implements View.O
                 showToast("Failed to register user. Please try again.");
             }
         });
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        studentClass= (String) parent.getItemAtPosition(position);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }

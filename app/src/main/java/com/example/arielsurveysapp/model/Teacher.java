@@ -15,4 +15,12 @@ public class Teacher extends User {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "subject='" + subject + '\'' +
+                '}';
+    }
 }
