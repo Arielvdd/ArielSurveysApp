@@ -1,7 +1,7 @@
 package com.example.arielsurveysapp.model;
 public class Student extends User {
-    private String studentClass; // שכבה
-    private String section; // כיתה
+    private String studentClass; // כיתה
+    private String section; // שכבה
 
     public Student(String id, String fName, String lName, String phone, String email, String password, String gender, String studentClass, String section) {
         super(id, fName, lName, gender, phone, email, password);

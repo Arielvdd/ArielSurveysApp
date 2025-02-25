@@ -3,6 +3,8 @@ package com.example.arielsurveysapp.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.arielsurveysapp.model.Student;
+import com.example.arielsurveysapp.model.Teacher;
 import com.example.arielsurveysapp.model.User;
 
 
@@ -111,6 +113,16 @@ public class SharedPreferencesUtil {
         editor.putString("lName", user.getlName());
         editor.putString("phone", user.getPhone());
         editor.apply();
+
+        if (user instanceof Teacher) {
+            editor.putString("userType", "teacher");
+        } else if (user instanceof Student) {
+            editor.putString("userType", "student");
+        }
+    }
+    public static String getUserType(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString("userType", "");
     }
     /*
     public static void setUserType(Context context,int role) {

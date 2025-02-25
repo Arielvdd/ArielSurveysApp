@@ -1,28 +1,33 @@
 package com.example.arielsurveysapp.model;
 
+import java.util.List;
+
 public class Answer {
 
-    private String surveyId;
+    protected String surveyId;
 
-    private String questionId;
+    protected String studentId;
+    protected List<String> answers;
 
+    public Answer() {
+    }
 
-    private String studentId;
-    private String answerText;
-
-    public Answer( String questionId, String studentId, String answerText) {
-
-        this.questionId = questionId;
+    public Answer(String surveyId, String studentId, List<String> answers) {
+        this.surveyId = surveyId;
         this.studentId = studentId;
-        this.answerText = answerText;
+        this.answers = answers;
+
     }
 
-    public String getQuestionId() {
-        return questionId;
+
+
+
+    public String getSurveyId() {
+        return surveyId;
     }
 
-    public void setQuestionId(String questionId) {
-        this.questionId = questionId;
+    public void setSurveyId(String surveyId) {
+        this.surveyId = surveyId;
     }
 
     public String getStudentId() {
@@ -33,12 +38,21 @@ public class Answer {
         this.studentId = studentId;
     }
 
-    public String getAnswerText() {
-        return answerText;
+    public List<String> getAnswers() {
+        return answers;
     }
 
-    public void setAnswerText(String answerText) {
-        this.answerText = answerText;
+    public void setAnswers(List<String> answers) {
+        this.answers = answers;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "surveyId='" + surveyId + '\'' +
+                ", studentId='" + studentId + '\'' +
+                ", answers=" + answers +
+                '}';
     }
 }
-

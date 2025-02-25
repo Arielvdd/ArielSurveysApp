@@ -13,13 +13,13 @@
         android:theme="@style/Theme.ArielSurveysApp"
         tools:targetApi="31">
         <activity
+            android:name="SurveyActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterTeacherActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterStudentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
