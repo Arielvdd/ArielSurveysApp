@@ -32,13 +32,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.btnLogin) {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(MainActivity.this, TeacherDashboardActivity.class);
                     startActivity(intent);
                 } else if (v.getId() == R.id.btnRegister) {
                     Intent intent = new Intent(MainActivity.this, RegisterStudentActivity.class);
                     startActivity(intent);
                 } else if (v.getId() == R.id.btnTeachersRegister) {
                     Intent intent = new Intent(MainActivity.this, RegisterTeacherActivity.class);
+                    startActivity(intent);
+                }
+                else if (v.getId() == R.id.btnCreateSurvey) {
+                    Intent intent = new Intent(MainActivity.this, CreateSurveyActivity.class);
                     startActivity(intent);
                 }
             }
