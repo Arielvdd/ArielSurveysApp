@@ -39,7 +39,7 @@ public class SurveyDetailsFragment extends Fragment {
             survey.setTargetGrade(spinnerGrade.getSelectedItem().toString());
             survey.setTargetSection(spinnerSection.getSelectedItem().toString());
             survey.setDescription(etDescription.getText().toString());
-
+/*
             Bundle bundle = new Bundle();
             bundle.putSerializable("survey", survey);
 
@@ -47,6 +47,7 @@ public class SurveyDetailsFragment extends Fragment {
             fragment.setArguments(bundle);
 
             ((CreateSurveyActivity) getActivity()).loadFragment(fragment);
+     */
         });
 
         return view;

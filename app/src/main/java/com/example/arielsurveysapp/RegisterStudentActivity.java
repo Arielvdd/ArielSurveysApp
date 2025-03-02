@@ -197,8 +197,10 @@ public class RegisterStudentActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        studentClass= (String) parent.getItemAtPosition(position);
-    }
+        if (position < 10)
+            studentClass = (String) parent.getItemAtPosition(position);
+        else studentClass="";
+       }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
