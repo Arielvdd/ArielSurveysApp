@@ -1,8 +1,10 @@
 package com.example.arielsurveysapp.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Survey {
+public class Survey  implements Serializable {
     private String id;
     private String category;
     private String title;
@@ -80,6 +82,15 @@ public class Survey {
     public void setTargetSection(String targetSection) {
         this.targetSection = targetSection;
     }
+
+
+    public void addQuestionToSurvey(Question question )
+    {
+            if(this.questions==null)
+                this.questions=new ArrayList<>();
+
+             this.questions.add(question);
+     }
 
     @Override
     public String toString() {

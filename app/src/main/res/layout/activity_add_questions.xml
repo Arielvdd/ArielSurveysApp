@@ -7,4 +7,91 @@
     android:layout_height="match_parent"
     tools:context=".AddQuestionsActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="23dp"
+        android:text="הוספת שאלה לסקר"
+        app:layout_constraintEnd_toStartOf="@+id/tvSurveyTitleAddQ"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSurveyTitleAddQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="73dp"
+        android:layout_marginEnd="36dp"
+        android:text="שם הסקר"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSurveyCategoryAddQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="70dp"
+        android:text="קטגוריה"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etQuestionTextAddQ"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="69dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="20dp"
+        android:hint="Enter question text"
+        app:layout_constraintBottom_toTopOf="@+id/optionsContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/optionsContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="248dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- LinearLayout for the EditText and + Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etQuestionOption1AddQ"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter option 1" />
+
+            <Button
+                android:id="@+id/btnCreateNewOption"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:text="+" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSaveQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="57dp"
+        android:text="שמור שאלה"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

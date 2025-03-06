@@ -106,6 +106,7 @@ public class CreateSurveyActivity extends AppCompatActivity {
             public void onCompleted(Void object) {
                 Intent intent = new Intent(CreateSurveyActivity.this, AddQuestionsActivity.class);
                 intent.putExtra("surveyId", surveyId);
+                intent.putExtra("survey", survey);
                 startActivity(intent);
             }
 

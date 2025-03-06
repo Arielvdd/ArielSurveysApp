@@ -160,6 +160,12 @@ public class DatabaseService {
         writeData("surveys/" + survey.getId(), survey, callback);
     }
 
+    public void updateSurvey(final Survey survey, final DatabaseCallback<Void> callback) {
+        writeData("surveys/" + survey.getId(), survey, callback);
+    }
+
+
+
     public void getSurvey(final String surveyId, final DatabaseCallback<Survey> callback) {
         getData("surveys/" + surveyId, Survey.class, callback);
     }
