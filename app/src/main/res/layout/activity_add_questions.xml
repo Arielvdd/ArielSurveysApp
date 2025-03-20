@@ -31,33 +31,32 @@
         android:id="@+id/tvSurveyCategoryAddQ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginBottom="11dp"
         android:text="קטגוריה"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/etQuestionTextAddQ"
+        app:layout_constraintStart_toStartOf="@+id/etQuestionTextAddQ" />
 
     <EditText
         android:id="@+id/etQuestionTextAddQ"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="69dp"
-        android:layout_marginEnd="69dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="61dp"
         android:hint="Enter question text"
-        app:layout_constraintBottom_toTopOf="@+id/optionsContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSurveyTitleAddQ" />
 
     <LinearLayout
         android:id="@+id/optionsContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="248dp"
+        android:layout_marginTop="35dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/etQuestionTextAddQ">
 
         <!-- LinearLayout for the EditText and + Button -->
         <LinearLayout
@@ -88,10 +87,20 @@
         android:id="@+id/btnSaveQ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="57dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginBottom="36dp"
         android:text="שמור שאלה"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnNewQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="36dp"
+        android:text="שאלה נוספת"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

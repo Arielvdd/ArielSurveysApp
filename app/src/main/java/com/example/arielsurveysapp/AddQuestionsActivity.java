@@ -27,7 +27,7 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
 
     private TextView tvSurveyTitleAddQ, tvSurveyCategoryAddQ;
     private EditText etQuestionTextAddQ, etQuestionOption1AddQ;
-    private Button btnCreateNewOption, btnSaveQ;
+    private Button btnCreateNewOption, btnSaveQ, btnAddQ;
     private LinearLayout optionsContainer;
     private ArrayList<EditText> optionEditTexts = new ArrayList<>();
 
@@ -67,11 +67,13 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
         btnCreateNewOption = findViewById(R.id.btnCreateNewOption);
         btnSaveQ = findViewById(R.id.btnSaveQ);
         optionsContainer = findViewById(R.id.optionsContainer);
-
+        btnAddQ=findViewById(R.id.btnNewQuestion);
         optionEditTexts.add(etQuestionOption1AddQ);
+
 
         btnCreateNewOption.setOnClickListener(this);
         btnSaveQ.setOnClickListener(this);
+        btnAddQ.setOnClickListener(this);
     }
 
     @Override
@@ -80,6 +82,16 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
             addNewOptionEditText();
         } else if (v == btnSaveQ) {
             saveQuestionOptions();
+        }
+
+        if(  v==btnAddQ){
+
+            saveQuestionOptions();
+            recreate();
+
+
+           // etQuestionOption1AddQ.setText("");
+
         }
     }
 
@@ -92,6 +104,7 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
 
         optionsContainer.addView(newOptionEditText);
         optionEditTexts.add(newOptionEditText);
+
         String optionText = newOptionEditText.getText().toString().trim();
       //  if (!optionText.isEmpty()) {
 
@@ -134,7 +147,7 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onCompleted(Void object) {
                 Toast.makeText(AddQuestionsActivity.this, "Question saved successfully!", Toast.LENGTH_SHORT).show();
-                finish();  // Finish the activity and return to the previous screen
+                 // Finish the activity and return to the previous screen
             }
 
             @Override
