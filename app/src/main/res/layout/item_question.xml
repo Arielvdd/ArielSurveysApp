@@ -3,27 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="12dp"
+    android:background="#F8F8F8">
 
     <TextView
         android:id="@+id/tvQuestionText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Question text"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginBottom="4dp"/>
+        android:textColor="#000000"
+        android:paddingBottom="8dp"/>
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/rgOptions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:orientation="vertical"
+        android:paddingBottom="8dp"/>
 
     <EditText
-        android:id="@+id/etAnswer"
+        android:id="@+id/etOpenAnswer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Your answer"
-        android:visibility="gone"/>
+        android:hint="Write your answer here..."
+        android:padding="8dp"
+        android:visibility="gone"
+        android:inputType="textMultiLine"
+        android:minLines="2"
+        android:textColor="#000000"
+        android:textSize="16sp"/>
+
 </LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF"
+    tools:context=".ShowSurveyActivity">
+
+    <TextView
+        android:id="@+id/tvSurveyTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:paddingBottom="8dp"
+        android:text="Survey Title" />
+
+    <TextView
+        android:id="@+id/tvSurveyDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#444444"
+        android:paddingBottom="12dp"
+        android:text="Survey Description" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewQuestions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btnSubmitAnswers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Answers"
+        android:backgroundTint="#883CD3"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>
