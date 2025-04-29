@@ -24,12 +24,13 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     private final List<Question> questions;
     private final List<String> answers;
 
+
     public QuestionAdapter(List<Question> questions) {
         this.questions = questions;
         this.answers = new ArrayList<>(Collections.nCopies(questions.size(), ""));
     }
 
-    public List<String> getAnswers() {
+    public List<String> getUserAnswers() {
         return answers;
     }
 
@@ -45,9 +46,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         Question question = questions.get(position);
         holder.tvQuestionText.setText((position + 1) + ". " + question.getQuestionText());
 
-        holder.rgOptions.setVisibility(View.GONE);
-        holder.etOpenAnswer.setVisibility(View.GONE);
-        holder.rgOptions.removeAllViews();
+       // holder.rgOptions.setVisibility(View.GONE);
+      //  holder.etOpenAnswer.setVisibility(View.GONE);
+      //  holder.rgOptions.removeAllViews();
 
         if (question.getOptions() != null && !question.getOptions().isEmpty()) {
             holder.rgOptions.setVisibility(View.VISIBLE);
@@ -59,9 +60,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
                 radioButton.setId(View.generateViewId());
                 holder.rgOptions.addView(radioButton);
 
-                if (option.equals(answers.get(position))) {
-                    radioButton.setChecked(true);
-                }
+             //   if (option.equals(answers.get(position))) {
+             //       radioButton.setChecked(true);
+             //   }
             }
 
             holder.rgOptions.setOnCheckedChangeListener((group, checkedId) -> {
@@ -100,4 +101,5 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             etOpenAnswer = itemView.findViewById(R.id.etOpenAnswer);
         }
     }
+
 }

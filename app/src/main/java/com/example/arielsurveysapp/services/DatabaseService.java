@@ -66,13 +66,7 @@ public class DatabaseService {
         return generateNewId("questions");
     }
 
-    public String generateAnswerId() {
-        return generateNewId("answers");
-    }
 
-    public String generateSurveyResultId() {
-        return generateNewId("survey_results");
-    }
 
     public void createNewUser(final User user, final DatabaseCallback<Void> callback) {
         writeData("users/" + user.getId(), user, callback);
@@ -186,11 +180,17 @@ public class DatabaseService {
     }
 
     public void submitAnswer(final Answer answer, final DatabaseCallback<Void> callback) {
-        String answerId = generateAnswerId();
-        writeData("survey_answers/" + answerId, answer, callback);
+
+        writeData("survey_answers/" + answer.getSurveyId()+"/"+ answer.getStudentId()+"/", answer.getAnswers(), callback);
     }
 
     public void getSurveyResults(String surveyId, final DatabaseCallback<SurveyResult> callback) {
         getData("survey_results/" + surveyId, SurveyResult.class, callback);
     }
+    public void updateSurveyResult(SurveyResult result) {
+        databaseReference.child("survey_results").child(result.getSurveyId())
+                .setValue(result);
+
+    }
+
 }

@@ -44,6 +44,8 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyView
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvSurveyTitle);
             tvCategory = itemView.findViewById(R.id.tvSurveyCategory);
+
+
         }
     }
 }
