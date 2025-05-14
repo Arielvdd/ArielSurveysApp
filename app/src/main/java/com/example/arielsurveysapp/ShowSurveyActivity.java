@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.arielsurveysapp.adapters.QuestionAdapter;
 import com.example.arielsurveysapp.model.Answer;
 import com.example.arielsurveysapp.model.Question;
+import com.example.arielsurveysapp.model.Student;
 import com.example.arielsurveysapp.model.Survey;
 import com.example.arielsurveysapp.model.SurveyResult;
 import com.example.arielsurveysapp.services.AuthenticationService;
@@ -33,6 +34,7 @@ public class ShowSurveyActivity extends AppCompatActivity {
     private AuthenticationService authenticationService;
     private DatabaseService databaseService;
     private Survey survey = null;
+    Student student=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,20 @@ public class ShowSurveyActivity extends AppCompatActivity {
         authenticationService = AuthenticationService.getInstance();
         uid = authenticationService.getCurrentUserId();
         databaseService = DatabaseService.getInstance();
+
+
+        databaseService.getStudent(uid, new DatabaseService.DatabaseCallback<Student>() {
+            @Override
+            public void onCompleted(Student object) {
+                student=object;
+
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+
+            }
+        });
 
         tvSurveyTitle = findViewById(R.id.tvSurveyTitle);
         tvSurveyDescription = findViewById(R.id.tvSurveyDescription);
@@ -62,11 +78,14 @@ public class ShowSurveyActivity extends AppCompatActivity {
             public void onCompleted(Survey object) {
                 survey = object;
                 if (survey != null) {
-                    tvSurveyTitle.setText(survey.getTitle());
-                    tvSurveyDescription.setText(survey.getDescription());
-                    questions = (ArrayList<Question>) survey.getQuestions();
-                    questionAdapter = new QuestionAdapter(questions);
-                    recyclerViewQuestions.setAdapter(questionAdapter);
+                    if(survey.getTargetGrade().contains(student.getStudentClass())) {
+                        tvSurveyTitle.setText(survey.getTitle());
+                        tvSurveyDescription.setText(survey.getDescription());
+                        questions = (ArrayList<Question>) survey.getQuestions();
+                        questionAdapter = new QuestionAdapter(questions);
+                        recyclerViewQuestions.setAdapter(questionAdapter);
+
+                    }
                 }
             }
 
@@ -108,9 +127,19 @@ public class ShowSurveyActivity extends AppCompatActivity {
                     result = new SurveyResult(surveyId, questions.size());
                 }
                 result.addResponse(userAnswers);
-                databaseService.updateSurveyResult(result);
-                Toast.makeText(ShowSurveyActivity.this, "Answers submitted successfully!", Toast.LENGTH_SHORT).show();
-                finish();
+                databaseService.updateSurveyResult(result, new DatabaseService.DatabaseCallback<Void>() {
+                    @Override
+                    public void onCompleted(Void object) {
+                        Toast.makeText(ShowSurveyActivity.this, "Answers submitted successfully!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailed(Exception e) {
+
+                    }
+                });
+
+
             }
 
             @Override

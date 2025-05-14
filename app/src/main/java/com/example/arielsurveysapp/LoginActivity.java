@@ -11,8 +11,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.arielsurveysapp.model.Student;
 import com.example.arielsurveysapp.model.Teacher;
 import com.example.arielsurveysapp.model.User;
+import com.example.arielsurveysapp.services.AuthenticationService;
+import com.example.arielsurveysapp.services.DatabaseService;
 import com.example.arielsurveysapp.utils.SharedPreferencesUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,16 +30,38 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     User user=null;
 
+
+
+
+
+
+    private static final String TAG = "loginToFireBase";
+
+    public static Student student=null;
+
+    public static Boolean isAdmin=false;
+    public  static  Teacher teacher=null;
+    private AuthenticationService authenticationService;
+    private DatabaseService databaseService;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        /// get the instance of the authentication service
+        authenticationService = AuthenticationService.getInstance();
+        databaseService=DatabaseService.getInstance();
+
+
+
         etEmail = findViewById(R.id.etEmailLogin);
         etPassword = findViewById(R.id.etPasswordLogin);
         btnLog = findViewById(R.id.btnLogin);
 
-        mAuth = FirebaseAuth.getInstance();
+
         user= SharedPreferencesUtil.getUser(LoginActivity.this);
         if(user!=null){
 
@@ -55,20 +80,82 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please enter email and password", Toast.LENGTH_SHORT).show();
             return;
         }
+        authenticationService.signIn(email, password, new AuthenticationService.AuthCallback<String>() {
+            /// Callback method called when the operation is completed
+            ///
+            /// @param uid the user ID of the user that is logged in
+            @Override
+            public void onCompleted(String uid) {
+                Log.d(TAG, "onCompleted: User logged in successfully");
+                /// get the user data from the database
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Intent go = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(go);
-                            finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+
+
+                            databaseService.getTeacher(uid, new DatabaseService.DatabaseCallback<Teacher>() {
+                                @Override
+                                public void onCompleted(Teacher obj) {
+                                    teacher = obj;
+
+                                    Log.d(TAG, "onCompleted: User data retrieved successfully");
+                                    /// save the user data to shared preferences
+
+                                    /// Redirect to main activity and clear back stack to prevent user from going back to login screen
+                                    Intent mainIntent = new Intent(LoginActivity.this, TeacherDashboardActivity.class);
+                                    /// Clear the back stack (clear history) and start the MainActivity
+                                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                                    if (teacher != null) {
+                                        SharedPreferencesUtil.saveUser(LoginActivity.this, teacher);
+                                        startActivity(mainIntent);
+
+                                    }
+                                    else {
+
+                                        databaseService.getStudent(uid, new DatabaseService.DatabaseCallback<Student>() {
+
+
+                                            @Override
+                                            public void onCompleted(Student object) {
+
+                                                student = object;
+
+                                                Log.d(TAG, "onCompleted: User data retrieved successfully");
+                                                /// save the user data to shared preferences
+                                                SharedPreferencesUtil.saveUser(LoginActivity.this, student);
+                                                /// Redirect to main activity and clear back stack to prevent user from going back to login screen
+                                                Intent mainIntent = new Intent(LoginActivity.this, StudentDashboardActivity.class);
+                                                /// Clear the back stack (clear history) and start the MainActivity
+                                                mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(mainIntent);
+                                            }
+
+
+
+                                            @Override
+                                            public void onFailed(Exception e) {
+                                                Log.e(TAG, "onFailed: Failed to retrieve user data", e);
+                                                //getUser
+
+                                            }
+                                        });
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void onFailed(Exception e) {
+
+                                }
+                    });
+                }
+
+            @Override
+            public void onFailed(Exception e) {
+
+                Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+            }
+
+            });
     }
 }

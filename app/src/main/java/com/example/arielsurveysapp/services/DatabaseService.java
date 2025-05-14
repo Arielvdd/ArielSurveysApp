@@ -4,6 +4,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import com.example.arielsurveysapp.model.*;
 import com.google.firebase.database.*;
+import com.google.firebase.database.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,16 +183,62 @@ public class DatabaseService {
 
     public void submitAnswer(final Answer answer, final DatabaseCallback<Void> callback) {
 
-        writeData("survey_answers/" + answer.getSurveyId()+"/"+ answer.getStudentId()+"/", answer.getAnswers(), callback);
+        writeData("survey_answers/" + answer.getSurveyId()+"/"+ answer.getStudentId()+"/", answer, callback);
+        writeData("user_SurveyAnswers/" + answer.getStudentId()+"/"+ answer.getSurveyId()+"/", answer, callback);
     }
+
+
+
+
+    public void getUserAnswer(final String surveyId, final String studendId, final DatabaseCallback<Answer> callback) {
+        getData("user_SurveyAnswers/" + studendId+"/"+ surveyId,Answer.class, callback);
+    }
+
+    public void getUserAnswers(final String uid,   final DatabaseCallback<List<Answer>> callback) {
+        readData("user_SurveyAnswers/" + uid).get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                callback.onFailed(task.getException());
+                return;
+            }
+            List<Answer> answers = new ArrayList<>();
+            task.getResult().getChildren().forEach(dataSnapshot -> {
+                Answer answer = dataSnapshot.getValue(Answer.class);
+                answers.add(answer);
+            });
+            callback.onCompleted(answers);
+        });
+    }
+
+
 
     public void getSurveyResults(String surveyId, final DatabaseCallback<SurveyResult> callback) {
         getData("survey_results/" + surveyId, SurveyResult.class, callback);
     }
-    public void updateSurveyResult(SurveyResult result) {
-        databaseReference.child("survey_results").child(result.getSurveyId())
-                .setValue(result);
+    public void updateSurveyResult(SurveyResult result,final DatabaseCallback<Void> callback) {
+
+        writeData("survey_results/" + result.getSurveyId(), result, callback);
 
     }
+
+
+
+    /// get a teacher from the database
+    /// @param teacherId the id of the teacher to get
+    /// @param callback the callback to call when the operation is completed
+    ///               the callback will receive the teacher object
+    ///              if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see Teacher
+    public void getTeacher(@NotNull final String teacherId, @NotNull final DatabaseCallback<Teacher> callback) {
+        getData("teachers/" + teacherId, Teacher.class, callback);
+    }
+
+    public void getStudent(@NotNull final String studentId, @NotNull final DatabaseCallback<Student> callback) {
+        getData("students/" + studentId, Student.class, callback);
+    }
+
+
+
 
 }

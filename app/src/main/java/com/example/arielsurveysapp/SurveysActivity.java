@@ -11,6 +11,8 @@ import com.example.arielsurveysapp.R;
 import com.example.arielsurveysapp.adapters.SurveyAdapter;
 import com.example.arielsurveysapp.model.Survey;
 import com.example.arielsurveysapp.services.DatabaseService;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class SurveysActivity extends AppCompatActivity {
@@ -19,6 +21,8 @@ public class SurveysActivity extends AppCompatActivity {
     private Button btnCreateSurvey;
     private SurveyAdapter surveyAdapter;
     private DatabaseService databaseService;
+
+    List<Survey>  surveysList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,10 @@ public class SurveysActivity extends AppCompatActivity {
 
         recyclerViewSurveys.setLayoutManager(new LinearLayoutManager(this));
 
+
+        surveyAdapter = new SurveyAdapter(surveysList,this);
+        recyclerViewSurveys.setAdapter(surveyAdapter);
+
         btnCreateSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,11 +50,14 @@ public class SurveysActivity extends AppCompatActivity {
     }
 
     private void loadSurveys() {
+
         databaseService.getAllSurveys(new DatabaseService.DatabaseCallback<List<Survey>>() {
             @Override
             public void onCompleted(List<Survey> surveys) {
-                surveyAdapter = new SurveyAdapter(surveys);
-                recyclerViewSurveys.setAdapter(surveyAdapter);
+                surveysList.addAll(surveys);
+                surveyAdapter.notifyDataSetChanged();
+
+
             }
 
             @Override

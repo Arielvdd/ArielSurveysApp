@@ -13,10 +13,16 @@
         android:theme="@style/Theme.ArielSurveysApp"
         tools:targetApi="31">
         <activity
+            android:name=".AssignedSurveysActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentDashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".ShowSurveyActivity"
             android:exported="false" />
         <activity
-            android:name=".ShowSurvey"
+            android:name=".ShowSurveyActivity"
             android:exported="false" />
         <activity
             android:name=".EditSurvey"

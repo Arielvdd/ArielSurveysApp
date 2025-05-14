@@ -1,21 +1,28 @@
 package com.example.arielsurveysapp.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.arielsurveysapp.AssignedSurveysActivity;
 import com.example.arielsurveysapp.R;
+import com.example.arielsurveysapp.ShowSurveyActivity;
 import com.example.arielsurveysapp.model.Survey;
 import java.util.List;
 
 public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyViewHolder> {
 
-    private final List<Survey> surveyList;
+    private List<Survey> surveyList;
+    private Context context;
 
-    public SurveyAdapter(List<Survey> surveyList) {
+    public SurveyAdapter(List<Survey> surveyList, Context context) {
         this.surveyList = surveyList;
+        this.context = context;
     }
 
     @NonNull
@@ -30,6 +37,16 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyView
         Survey survey = surveyList.get(position);
         holder.tvTitle.setText(survey.getTitle());
         holder.tvCategory.setText(survey.getCategory());
+
+        holder.itemView.setOnClickListener(v -> {
+            if((context) instanceof AssignedSurveysActivity) {
+                Intent intent = new Intent(context, ShowSurveyActivity.class);
+                intent.putExtra("surveyId", survey.getId());
+                context.startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
@@ -44,8 +61,6 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyView
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvSurveyTitle);
             tvCategory = itemView.findViewById(R.id.tvSurveyCategory);
-
-
         }
     }
 }
