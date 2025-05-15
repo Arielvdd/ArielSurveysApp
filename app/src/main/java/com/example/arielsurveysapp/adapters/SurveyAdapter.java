@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.arielsurveysapp.AssignedSurveysActivity;
 import com.example.arielsurveysapp.R;
 import com.example.arielsurveysapp.ShowSurveyActivity;
+import com.example.arielsurveysapp.SurveyStatsActivity;
 import com.example.arielsurveysapp.model.Survey;
 import java.util.List;
 
@@ -48,6 +49,15 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyView
                 intent.putExtra("surveyId", survey.getId());
                 context.startActivity(intent);
             }
+
+            if((context) instanceof SurveyStatsActivity) {
+                Intent intent = new Intent(context, ShowSurveyActivity.class);
+                intent.putExtra("surveyId", survey.getId());
+                context.startActivity(intent);
+            }
+
+
+
         });
 
 

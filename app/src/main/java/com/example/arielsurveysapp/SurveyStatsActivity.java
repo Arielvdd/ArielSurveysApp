@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.arielsurveysapp.model.SurveyResult;
 import com.example.arielsurveysapp.services.DatabaseService;
@@ -21,6 +23,9 @@ import java.util.Map;
 public class SurveyStatsActivity extends AppCompatActivity {
 
     DatabaseService databaseService;
+    RecyclerView rvSurveysStats;
+
+    String surveyId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,29 +40,27 @@ public class SurveyStatsActivity extends AppCompatActivity {
 
         databaseService = DatabaseService.getInstance();
 
+        surveyId = getIntent().getStringExtra("surveyId");
 
-        databaseService.getAllSurveyResults(new DatabaseService.DatabaseCallback<List<SurveyResult>>() {
+        rvSurveysStats = findViewById(R.id.rv_survey_stats);
+        rvSurveysStats.setLayoutManager(new LinearLayoutManager(this));
+
+
+        databaseService.getSurveyResults(surveyId, new DatabaseService.DatabaseCallback<SurveyResult>() {
             @Override
-            public void onCompleted(List<SurveyResult> surveyResults) {
-                Log.d("!!!!!!!!!!!!!!", "surveyResults=" + surveyResults.size());
-                // SurveyId -> collection of Array Counter
-                HashMap<String, ArrayList<HashMap<String, Integer>>> surveys = new HashMap<>();
-                for (SurveyResult surveyResult : surveyResults) {
-                    /// question list of Array Counter
-                    ArrayList<HashMap<String, Integer>> question = new ArrayList<>();
-                    for (List<String> aggregatedAnswer : surveyResult.getAggregatedAnswers()) {
-                        // Counter Array
-                        HashMap<String, Integer> arrayCounter = new HashMap<>();
-                        for (String answer : aggregatedAnswer) {
-                            /// increment the amount that users answer this question
-                            arrayCounter.put(answer, arrayCounter.getOrDefault(answer, 0) + 1);
-                        }
-                        question.add(arrayCounter);
+            public void onCompleted(SurveyResult surveyResult) {
+                /// question list of Array Counter
+                ArrayList<HashMap<String, Integer>> sr = new ArrayList<>();
+                for (List<String> aggregatedAnswer : surveyResult.getAggregatedAnswers()) {
+                    // Counter Array
+                    HashMap<String, Integer> arrayCounter = new HashMap<>();
+                    for (String answer : aggregatedAnswer) {
+                        /// increment the amount that users answer this question
+                        arrayCounter.put(answer, arrayCounter.getOrDefault(answer, 0) + 1);
                     }
-                    surveys.put(surveyResult.getSurveyId(), question);
+                    sr.add(arrayCounter);
                 }
-
-                showQuestions(surveys);
+                showQuestions(sr);
             }
 
             @Override
@@ -67,16 +70,7 @@ public class SurveyStatsActivity extends AppCompatActivity {
         });
     }
 
-    private void showQuestions(HashMap<String, ArrayList<HashMap<String, Integer>>> surveys) {
-        for (Map.Entry<String, ArrayList<HashMap<String, Integer>>> aggregatedAnswer : surveys.entrySet()) {
-            String surveyId = aggregatedAnswer.getKey();
-            ArrayList<HashMap<String, Integer>> question = aggregatedAnswer.getValue();
+    private void showQuestions(ArrayList<HashMap<String, Integer>> question) {
 
-
-            ///
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("surveyId", surveyId);
-            intent.putExtra("aggregatedAnswer", question);
-        }
     }
 }
