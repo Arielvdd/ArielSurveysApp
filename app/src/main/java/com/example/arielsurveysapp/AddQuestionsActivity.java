@@ -81,16 +81,21 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
         if (v == btnCreateNewOption) {
             addNewOptionEditText();
         } else if (v == btnSaveQ) {
+
             saveQuestionOptions();
+            clearInputs();
+            Intent go = new Intent(AddQuestionsActivity.this,TeacherDashboardActivity.class);
+            startActivity(go);
         }
 
         if(  v==btnAddQ){
 
             saveQuestionOptions();
+            clearInputs();
             recreate();
 
 
-           // etQuestionOption1AddQ.setText("");
+            etQuestionOption1AddQ.setText("");
 
         }
     }
@@ -105,40 +110,41 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
         optionsContainer.addView(newOptionEditText);
         optionEditTexts.add(newOptionEditText);
 
-        String optionText = newOptionEditText.getText().toString().trim();
-      //  if (!optionText.isEmpty()) {
-
-       //     options.add(optionText);
-    //    }
+//        String optionText = newOptionEditText.getText().toString().trim();
+//      if (!optionText.isEmpty()) {
+//
+//         options.add(optionText);
+//        }
 
 
     }
 
     private void saveQuestionOptions() {
-        //String optionText1 = etQuestionOption1AddQ.getText().toString().trim();
-       // options.add(optionText1);
+     //   String optionText1 = etQuestionOption1AddQ.getText().toString().trim();
+    // options.add(optionText1);
 
         String questionText = etQuestionTextAddQ.getText().toString().trim();
 
 
-
-
-        for (EditText optionEditText : optionEditTexts) {
-            String optionText = optionEditText.getText().toString().trim()+"  ";
-            if (!optionText.isEmpty()) {
-                options.add(optionText);
-            }
-        }
         if (questionText.isEmpty() ) {
             Toast.makeText(this, "Question and options cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
-
         String questionId = DatabaseService.getInstance().generateQuestionId();
 
-        Question question = new Question(questionId, questionText, options);
+        Question question = new Question(questionId, questionText, new ArrayList<>());
+        for (EditText optionEditText : optionEditTexts) {
+            String optionText = optionEditText.getText().toString().trim();
+            if (!optionText.isEmpty()) {
+                question.addOption(optionText);
+            }
+        }
+
+
+
+
+
+
         survey.addQuestionToSurvey(question);
 
 
@@ -155,5 +161,16 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
                 Toast.makeText(AddQuestionsActivity.this, "Failed to save question: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    private void clearInputs() {
+        etQuestionTextAddQ.setText("");
+        options.clear();
+        for (EditText editText : optionEditTexts) {
+            editText.setText("");
+        }
+        optionEditTexts.clear();
+        optionEditTexts.add(etQuestionOption1AddQ); // Re-add the first default option
     }
 }

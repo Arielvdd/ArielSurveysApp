@@ -33,6 +33,12 @@ public class Question {
         this.options = options;
     }
 
+
+    public void addOption(String option){
+
+        this.options.add(option);
+    }
+
     public String getId() {
         return id;
     }

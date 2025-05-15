@@ -3,6 +3,7 @@ package com.example.arielsurveysapp.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Survey  implements Serializable {
     private String id;
@@ -13,6 +14,8 @@ public class Survey  implements Serializable {
     private String description;
     private List<Question> questions;
 
+    private  String status;
+
 
     public Survey(String id, String category, String title, String targetGrade, String targetSection, String description, List<Question> questions) {
         this.id = id;
@@ -22,6 +25,18 @@ public class Survey  implements Serializable {
         this.targetSection = targetSection;
         this.description = description;
         this.questions = questions;
+    }
+
+
+    public Survey(String id, String category, String title, String targetGrade, String targetSection, String description, List<Question> questions, String status) {
+        this.id = id;
+        this.category = category;
+        this.title = title;
+        this.targetGrade = targetGrade;
+        this.targetSection = targetSection;
+        this.description = description;
+        this.questions = questions;
+        this.status = status;
     }
 
     public Survey() {
@@ -92,6 +107,14 @@ public class Survey  implements Serializable {
              this.questions.add(question);
      }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Survey{" +
@@ -103,5 +126,18 @@ public class Survey  implements Serializable {
                 ", description='" + description + '\'' +
                 ", questions=" + questions +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Survey survey = (Survey) o;
+        return Objects.equals(id, survey.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

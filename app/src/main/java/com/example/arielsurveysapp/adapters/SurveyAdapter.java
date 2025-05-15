@@ -37,6 +37,10 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyView
         Survey survey = surveyList.get(position);
         holder.tvTitle.setText(survey.getTitle());
         holder.tvCategory.setText(survey.getCategory());
+        if((context) instanceof AssignedSurveysActivity)
+
+                holder.tvSurveyStatus.setText("");
+        else  holder.tvSurveyStatus.setText(survey.getStatus());
 
         holder.itemView.setOnClickListener(v -> {
             if((context) instanceof AssignedSurveysActivity) {
@@ -55,12 +59,13 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyView
     }
 
     static class SurveyViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle, tvCategory;
+        TextView tvTitle, tvCategory,tvSurveyStatus;
 
         public SurveyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvSurveyTitle);
             tvCategory = itemView.findViewById(R.id.tvSurveyCategory);
+            tvSurveyStatus=itemView.findViewById(R.id.tvSurveyStatus);
         }
     }
 }

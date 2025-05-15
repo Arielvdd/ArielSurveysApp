@@ -1,5 +1,6 @@
 package com.example.arielsurveysapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,42 +35,43 @@ public class ShowSurveyActivity extends AppCompatActivity {
     private AuthenticationService authenticationService;
     private DatabaseService databaseService;
     private Survey survey = null;
-    Student student=null;
+    private Student student = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_survey);
 
+        initViews();
+
         authenticationService = AuthenticationService.getInstance();
         uid = authenticationService.getCurrentUserId();
         databaseService = DatabaseService.getInstance();
 
-
         databaseService.getStudent(uid, new DatabaseService.DatabaseCallback<Student>() {
             @Override
             public void onCompleted(Student object) {
-                student=object;
-
+                student = object;
             }
 
             @Override
             public void onFailed(Exception e) {
-
             }
         });
 
+        surveyId = getIntent().getStringExtra("surveyId");
+        loadSurvey(surveyId);
+
+        submitBtn.setOnClickListener(v -> handleSubmit());
+    }
+
+    private void initViews() {
         tvSurveyTitle = findViewById(R.id.tvSurveyTitle);
         tvSurveyDescription = findViewById(R.id.tvSurveyDescription);
         recyclerViewQuestions = findViewById(R.id.recyclerViewQuestions);
         submitBtn = findViewById(R.id.btnSubmitAnswers);
 
         recyclerViewQuestions.setLayoutManager(new LinearLayoutManager(this));
-        surveyId = getIntent().getStringExtra("surveyId");
-
-        loadSurvey(surveyId);
-
-        submitBtn.setOnClickListener(v -> handleSubmit());
     }
 
     private void loadSurvey(String surveyId) {
@@ -78,13 +80,12 @@ public class ShowSurveyActivity extends AppCompatActivity {
             public void onCompleted(Survey object) {
                 survey = object;
                 if (survey != null) {
-                    if(survey.getTargetGrade().contains(student.getStudentClass())) {
+                    if (survey.getTargetGrade().contains(student.getStudentClass())) {
                         tvSurveyTitle.setText(survey.getTitle());
                         tvSurveyDescription.setText(survey.getDescription());
                         questions = (ArrayList<Question>) survey.getQuestions();
                         questionAdapter = new QuestionAdapter(questions);
                         recyclerViewQuestions.setAdapter(questionAdapter);
-
                     }
                 }
             }
@@ -131,15 +132,14 @@ public class ShowSurveyActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(Void object) {
                         Toast.makeText(ShowSurveyActivity.this, "Answers submitted successfully!", Toast.LENGTH_SHORT).show();
+                        Intent onFinish = new Intent(ShowSurveyActivity.this, StudentDashboardActivity.class);
+                        startActivity(onFinish);
                     }
 
                     @Override
                     public void onFailed(Exception e) {
-
                     }
                 });
-
-
             }
 
             @Override

@@ -10,12 +10,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.arielsurveysapp.adapters.SurveyAdapter;
 import com.example.arielsurveysapp.model.Answer;
 import com.example.arielsurveysapp.model.Student;
 import com.example.arielsurveysapp.model.Survey;
 import com.example.arielsurveysapp.services.AuthenticationService;
 import com.example.arielsurveysapp.services.DatabaseService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,15 +27,9 @@ public class AssignedSurveysActivity extends AppCompatActivity {
     private SurveyAdapter surveyAdapter;
     private DatabaseService databaseService;
 
-    // Example: You should pass this from login or shared preferences.
-    private Student currentStudent=null;
-
+    private Student currentStudent = null;
     private AuthenticationService authenticationService;
-
     private String uid;
-
-    boolean found = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,32 +43,26 @@ public class AssignedSurveysActivity extends AppCompatActivity {
             return insets;
         });
 
-
         authenticationService = AuthenticationService.getInstance();
         uid = authenticationService.getCurrentUserId();
         databaseService = DatabaseService.getInstance();
 
-
+        // Get the current student data
         databaseService.getStudent(uid, new DatabaseService.DatabaseCallback<Student>() {
             @Override
             public void onCompleted(Student object) {
-                currentStudent=object;
-
+                currentStudent = object;
+                loadAssignedSurveys();
             }
 
             @Override
             public void onFailed(Exception e) {
-
+                e.printStackTrace();
             }
         });
 
         recyclerViewAssignedSurveys = findViewById(R.id.recyclerViewAssignedSurveys);
         recyclerViewAssignedSurveys.setLayoutManager(new LinearLayoutManager(this));
-        databaseService = DatabaseService.getInstance();
-
-
-
-        loadAssignedSurveys();
     }
 
     private void loadAssignedSurveys() {
@@ -80,27 +70,19 @@ public class AssignedSurveysActivity extends AppCompatActivity {
             @Override
             public void onCompleted(List<Survey> allSurveys) {
                 String fullClass = currentStudent.getStudentClass() + currentStudent.getSection(); // e.g. "י5"
-
+                String entireClass = currentStudent.getStudentClass() + "all";
                 List<Survey> assignedSurveys = new ArrayList<>();
                 for (Survey survey : allSurveys) {
-                    if (survey.getTargetGrade() != null && survey.getTargetGrade().contains(fullClass)) {
-
-                       if(!checkAnswerExist(survey)) {
-                           assignedSurveys.add(survey);
-
-                           //Toast.makeText(AssignedSurveysActivity.this,found+"",Toast.LENGTH_LONG).show();
-
-                       }
-                       // Toast.makeText(AssignedSurveysActivity.this,found+"",Toast.LENGTH_LONG).show();
 
 
-                    }
-
+                        if (survey.getTargetGrade() != null) {
+                            if (survey.getTargetGrade().contains(fullClass) || survey.getTargetGrade().contains(entireClass))
+                                assignedSurveys.add(survey);
+                        }
 
                 }
 
-                surveyAdapter = new SurveyAdapter(assignedSurveys,AssignedSurveysActivity.this);
-                recyclerViewAssignedSurveys.setAdapter(surveyAdapter);
+                filterUnansweredSurveys(assignedSurveys);
             }
 
             @Override
@@ -110,35 +92,41 @@ public class AssignedSurveysActivity extends AppCompatActivity {
         });
     }
 
-    public  boolean checkAnswerExist( Survey survey){
+    private void filterUnansweredSurveys(List<Survey> assignedSurveys) {
+        List<Survey> surveysToShow = new ArrayList<>();
+        int totalSurveys = assignedSurveys.size();
+        int[] checkedCount = {0};
 
-        found=false;
+        for (Survey survey : assignedSurveys) {
+            databaseService.getUserAnswer(survey.getId(), uid, new DatabaseService.DatabaseCallback<Answer>() {
+                @Override
+                public void onCompleted(Answer answer) {
+                    if (answer == null) {
+                        surveysToShow.add(survey);
+                    }
 
-        databaseService.getUserAnswer(survey.getId(), uid, new DatabaseService.DatabaseCallback<Answer>() {
-            @Override
-            public void onCompleted(Answer object) {
-                if(object!=null){
+                    checkedCount[0]++;
 
-                //    object.getSurveyId().equals(survey.getId());
-                   found=true;
-
-                    Toast.makeText(AssignedSurveysActivity.this,found+"hghhhhh",Toast.LENGTH_LONG).show();
-
-
+                    if (checkedCount[0] == totalSurveys) {
+                        updateRecyclerView(surveysToShow);
+                    }
                 }
-                else  found=false;
 
+                @Override
+                public void onFailed(Exception e) {
+                    e.printStackTrace();
+                    checkedCount[0]++;
 
+                    if (checkedCount[0] == totalSurveys) {
+                        updateRecyclerView(surveysToShow);
+                    }
+                }
+            });
+        }
+    }
 
-
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-
-                found=false;
-            }
-        });
-        return found;
+    private void updateRecyclerView(List<Survey> surveysToShow) {
+        surveyAdapter = new SurveyAdapter(surveysToShow, AssignedSurveysActivity.this);
+        recyclerViewAssignedSurveys.setAdapter(surveyAdapter);
     }
 }

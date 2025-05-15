@@ -56,6 +56,23 @@ public class DatabaseService {
         });
     }
 
+    private <T> void getDataList(@NotNull final String path, @NotNull final Class<T> clazz, @NotNull final DatabaseCallback<List<T>> callback) {
+        readData(path).get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e(TAG, "Error getting data", task.getException());
+                callback.onFailed(task.getException());
+                return;
+            }
+            List<T> tList = new ArrayList<>();
+            task.getResult().getChildren().forEach(dataSnapshot -> {
+                T t = dataSnapshot.getValue(clazz);
+                tList.add(t);
+            });
+
+            callback.onCompleted(tList);
+        });
+    }
+
     private String generateNewId(final String path) {
         return databaseReference.child(path).push().getKey();
     }
@@ -175,7 +192,27 @@ public class DatabaseService {
             List<Survey> surveys = new ArrayList<>();
             task.getResult().getChildren().forEach(dataSnapshot -> {
                 Survey survey = dataSnapshot.getValue(Survey.class);
-                surveys.add(survey);
+                if(survey.getStatus().equals("close")) {
+                    surveys.add(survey);
+                }
+            });
+            callback.onCompleted(surveys);
+        });
+    }
+
+
+    public void getAllSurveysForAdmin(final DatabaseCallback<List<Survey>> callback) {
+        readData("surveys").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                callback.onFailed(task.getException());
+                return;
+            }
+            List<Survey> surveys = new ArrayList<>();
+            task.getResult().getChildren().forEach(dataSnapshot -> {
+                Survey survey = dataSnapshot.getValue(Survey.class);
+
+                    surveys.add(survey);
+
             });
             callback.onCompleted(surveys);
         });
@@ -215,9 +252,11 @@ public class DatabaseService {
         getData("survey_results/" + surveyId, SurveyResult.class, callback);
     }
     public void updateSurveyResult(SurveyResult result,final DatabaseCallback<Void> callback) {
-
         writeData("survey_results/" + result.getSurveyId(), result, callback);
+    }
 
+    public void getAllSurveyResults(final DatabaseCallback<List<SurveyResult>> callback) {
+        getDataList("survey_results", SurveyResult.class, callback);
     }
 
 

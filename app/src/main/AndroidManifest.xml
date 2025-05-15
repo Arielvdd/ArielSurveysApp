@@ -13,13 +13,13 @@
         android:theme="@style/Theme.ArielSurveysApp"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".AssignedSurveysActivity"
             android:exported="false" />
         <activity
             android:name=".StudentDashboardActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ShowSurveyActivity"
             android:exported="false" />
         <activity
             android:name=".ShowSurveyActivity"
@@ -60,7 +60,7 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SurveyStatsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

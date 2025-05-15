@@ -51,7 +51,7 @@ public class SurveysActivity extends AppCompatActivity {
 
     private void loadSurveys() {
 
-        databaseService.getAllSurveys(new DatabaseService.DatabaseCallback<List<Survey>>() {
+        databaseService.getAllSurveysForAdmin(new DatabaseService.DatabaseCallback<List<Survey>>() {
             @Override
             public void onCompleted(List<Survey> surveys) {
                 surveysList.addAll(surveys);

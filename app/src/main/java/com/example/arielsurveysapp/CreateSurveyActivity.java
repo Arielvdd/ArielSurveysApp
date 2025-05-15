@@ -99,7 +99,7 @@ public class CreateSurveyActivity extends AppCompatActivity {
         }
 
         String surveyId = databaseService.generateSurveyId();
-        Survey survey = new Survey(surveyId, category, title, classes, "", description, null);
+        Survey survey = new Survey(surveyId, category, title, classes, "", description, null,"open");
 
         databaseService.createNewSurvey(survey, new DatabaseService.DatabaseCallback<Void>() {
             @Override
