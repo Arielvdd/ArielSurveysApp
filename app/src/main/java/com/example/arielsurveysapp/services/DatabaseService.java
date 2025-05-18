@@ -217,6 +217,25 @@ public class DatabaseService {
             callback.onCompleted(surveys);
         });
     }
+    public void getQuestionsForSurvey(@NotNull final String surveyId, @NotNull final DatabaseCallback<List<Question>> callback) {
+        readData("surveys/" + surveyId + "/questions").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e(TAG, "Error getting questions for survey " + surveyId, task.getException());
+                callback.onFailed(task.getException());
+                return;
+            }
+
+            List<Question> questionList = new ArrayList<>();
+            for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
+                Question question = dataSnapshot.getValue(Question.class);
+                if (question != null) {
+                    questionList.add(question);
+                }
+            }
+
+            callback.onCompleted(questionList);
+        });
+    }
 
     public void submitAnswer(final Answer answer, final DatabaseCallback<Void> callback) {
 

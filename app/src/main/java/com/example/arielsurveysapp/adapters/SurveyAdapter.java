@@ -13,6 +13,7 @@ import com.example.arielsurveysapp.AssignedSurveysActivity;
 import com.example.arielsurveysapp.R;
 import com.example.arielsurveysapp.ShowSurveyActivity;
 import com.example.arielsurveysapp.SurveyStatsActivity;
+import com.example.arielsurveysapp.SurveysActivity;
 import com.example.arielsurveysapp.model.Survey;
 import java.util.List;
 
@@ -50,8 +51,8 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyView
                 context.startActivity(intent);
             }
 
-            if((context) instanceof SurveyStatsActivity) {
-                Intent intent = new Intent(context, ShowSurveyActivity.class);
+            if((context) instanceof SurveysActivity) {
+                Intent intent = new Intent(context, SurveyStatsActivity.class);
                 intent.putExtra("surveyId", survey.getId());
                 context.startActivity(intent);
             }

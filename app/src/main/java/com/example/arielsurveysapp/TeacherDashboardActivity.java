@@ -6,38 +6,42 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TeacherDashboardActivity extends AppCompatActivity {
+public class TeacherDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnViewUsers, btnViewSurveys, btnCreateSurvey; // Added btnCreateSurvey
+    private Button btnViewUsers, btnViewSurveys, btnCreateSurvey, btnPublishSurveys;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_dashboard);
 
-        btnViewUsers = findViewById(R.id.btnViewUsers);
+        btnCreateSurvey = findViewById(R.id.btnCreateSurvey);
         btnViewSurveys = findViewById(R.id.btnViewSurveys);
-        btnCreateSurvey = findViewById(R.id.btnCreateSurvey); // Initialize button
+        btnViewUsers = findViewById(R.id.btnViewUsers);
+        btnPublishSurveys = findViewById(R.id.btnPublishSurveys);
 
-        btnViewUsers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(TeacherDashboardActivity.this, UsersActivity.class));
-            }
-        });
+        btnCreateSurvey.setOnClickListener(this);
+        btnViewSurveys.setOnClickListener(this);
+        btnViewUsers.setOnClickListener(this);
+        btnPublishSurveys.setOnClickListener(this);
+    }
 
-        btnViewSurveys.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(TeacherDashboardActivity.this, SurveysActivity.class));
-            }
-        });
+    @Override
+    public void onClick(View v) {
+        Intent intent = null;
 
-        btnCreateSurvey.setOnClickListener(new View.OnClickListener() { // Set click listener
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(TeacherDashboardActivity.this, CreateSurveyActivity.class));
-            }
-        });
+        if (v.getId() == R.id.btnCreateSurvey) {
+            intent = new Intent(this, CreateSurveyActivity.class);
+        } else if (v.getId() == R.id.btnViewSurveys) {
+            intent = new Intent(this, SurveysActivity.class);
+        } else if (v.getId() == R.id.btnViewUsers) {
+            intent = new Intent(this, UsersActivity.class);
+        } else if (v.getId() == R.id.btnPublishSurveys) {
+            intent = new Intent(this, MainActivity.class);
+        }
+
+        if (intent != null) {
+            startActivity(intent);
+        }
     }
 }
