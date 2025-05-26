@@ -26,7 +26,7 @@ import java.util.UUID;
 public class AddQuestionsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvSurveyTitleAddQ, tvSurveyCategoryAddQ;
-    private EditText etQuestionTextAddQ, etQuestionOption1AddQ;
+    private EditText etQuestionTextAddQ;
     private Button btnCreateNewOption, btnSaveQ, btnAddQ;
     private LinearLayout optionsContainer;
     private ArrayList<EditText> optionEditTexts = new ArrayList<>();
@@ -43,7 +43,7 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_questions);
         initViews();
-        databaseService=DatabaseService.getInstance();
+        databaseService = DatabaseService.getInstance();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -57,23 +57,26 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
             tvSurveyTitleAddQ.setText(survey.getTitle());
             tvSurveyCategoryAddQ.setText(survey.getCategory());
         }
+
+        addFirstOption();
     }
 
     private void initViews() {
         tvSurveyTitleAddQ = findViewById(R.id.tvSurveyTitleAddQ);
         tvSurveyCategoryAddQ = findViewById(R.id.tvSurveyCategoryAddQ);
         etQuestionTextAddQ = findViewById(R.id.etQuestionTextAddQ);
-        etQuestionOption1AddQ = findViewById(R.id.etQuestionOption1AddQ);
         btnCreateNewOption = findViewById(R.id.btnCreateNewOption);
         btnSaveQ = findViewById(R.id.btnSaveQ);
         optionsContainer = findViewById(R.id.optionsContainer);
-        btnAddQ=findViewById(R.id.btnNewQuestion);
-        optionEditTexts.add(etQuestionOption1AddQ);
-
+        btnAddQ = findViewById(R.id.btnNewQuestion);
 
         btnCreateNewOption.setOnClickListener(this);
         btnSaveQ.setOnClickListener(this);
         btnAddQ.setOnClickListener(this);
+    }
+
+    private void addFirstOption() {
+        addNewOptionEditText();
     }
 
     @Override
@@ -81,52 +84,54 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
         if (v == btnCreateNewOption) {
             addNewOptionEditText();
         } else if (v == btnSaveQ) {
-
             saveQuestionOptions();
             clearInputs();
-            Intent go = new Intent(AddQuestionsActivity.this,TeacherDashboardActivity.class);
+            Intent go = new Intent(AddQuestionsActivity.this, TeacherDashboardActivity.class);
             startActivity(go);
         }
 
-        if(  v==btnAddQ){
-
+        if (v == btnAddQ) {
             saveQuestionOptions();
             clearInputs();
             recreate();
-
-
-            etQuestionOption1AddQ.setText("");
-
         }
     }
 
     private void addNewOptionEditText() {
-        EditText newOptionEditText = new EditText(this);
-        newOptionEditText.setLayoutParams(new LinearLayout.LayoutParams(
+        LinearLayout optionLayout = new LinearLayout(this);
+        optionLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        newOptionEditText.setHint("Enter option " + (optionEditTexts.size() + 1));
+        optionLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        optionsContainer.addView(newOptionEditText);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, 0, 0, 36);
+        optionLayout.setLayoutParams(layoutParams);
+
+        EditText newOptionEditText = new EditText(this);
+        LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        editTextParams.weight = 1;
+        newOptionEditText.setLayoutParams(editTextParams);
+        newOptionEditText.setHint("תשובה אפשרית " + (optionEditTexts.size() + 1));
+        newOptionEditText.setBackgroundColor(0xFFF8F9FA);
+        newOptionEditText.setPadding(36, 36, 36, 36);
+        newOptionEditText.setTextSize(14);
+        newOptionEditText.setTextColor(0xFF37474F);
+        newOptionEditText.setMinHeight(144);
+
+        optionLayout.addView(newOptionEditText);
+        optionsContainer.addView(optionLayout);
         optionEditTexts.add(newOptionEditText);
-
-//        String optionText = newOptionEditText.getText().toString().trim();
-//      if (!optionText.isEmpty()) {
-//
-//         options.add(optionText);
-//        }
-
-
     }
 
     private void saveQuestionOptions() {
-     //   String optionText1 = etQuestionOption1AddQ.getText().toString().trim();
-    // options.add(optionText1);
-
         String questionText = etQuestionTextAddQ.getText().toString().trim();
 
-
-        if (questionText.isEmpty() ) {
+        if (questionText.isEmpty()) {
             Toast.makeText(this, "Question and options cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -140,20 +145,12 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
             }
         }
 
-
-
-
-
-
         survey.addQuestionToSurvey(question);
-
-
 
         databaseService.updateSurvey(survey, new DatabaseService.DatabaseCallback<Void>() {
             @Override
             public void onCompleted(Void object) {
                 Toast.makeText(AddQuestionsActivity.this, "Question saved successfully!", Toast.LENGTH_SHORT).show();
-                 // Finish the activity and return to the previous screen
             }
 
             @Override
@@ -161,7 +158,6 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
                 Toast.makeText(AddQuestionsActivity.this, "Failed to save question: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void clearInputs() {
@@ -171,6 +167,7 @@ public class AddQuestionsActivity extends AppCompatActivity implements View.OnCl
             editText.setText("");
         }
         optionEditTexts.clear();
-        optionEditTexts.add(etQuestionOption1AddQ); // Re-add the first default option
+        optionsContainer.removeAllViews();
+        addFirstOption();
     }
 }

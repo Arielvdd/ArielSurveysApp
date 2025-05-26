@@ -3,39 +3,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:layout_marginBottom="2dp">
 
-    <TextView
-        android:id="@+id/tv_item_item_survey_stat_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_item_item_survey_stat_amount"
+
+    <View
+        android:id="@+id/colorIndicator"
+        android:layout_width="4dp"
+        android:layout_height="0dp"
+        android:background="#2196F3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/lorem" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_item_item_survey_stat_amount"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="5"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_item_item_survey_stat_text"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintStart_toEndOf="@id/colorIndicator"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_item_item_survey_stat_text"
-        tools:text="@tools:sample/us_zipcodes" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <com.google.android.material.divider.MaterialDivider
+        <TextView
+            android:id="@+id/tv_item_item_survey_stat_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Answer Option"
+            android:textSize="16sp"
+            android:textColor="#37474F"
+            android:fontFamily="sans-serif"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="This is a sample answer option" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#9C6969"
+            android:gravity="center"
+            android:minWidth="32dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:id="@+id/tv_item_item_survey_stat_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                tools:text="12" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#FF0000"
-        app:dividerColor="#FF0000"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginStart="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,7 +40,7 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     private void loadUsers() {
-        databaseService.getAllUsers(new DatabaseService.DatabaseCallback<List<User>>() {
+        databaseService.getAllStudents(new DatabaseService.DatabaseCallback<List<User>>() {
             @Override
             public void onCompleted(List<User> users) {
                 Log.d(TAG, "Users fetched: " + users.size());

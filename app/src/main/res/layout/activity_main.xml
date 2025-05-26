@@ -4,78 +4,85 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#F5F7FA"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/headerSection"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome to Ariel Surveys App"
-        android:textSize="24sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-condensed"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="#2E7D8A"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="100dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvAppTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="StudentVoice"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonsContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:padding="16dp"
-        android:drawablePadding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:elevation="4dp"
-        android:stateListAnimator="@null"
-        android:foreground="?attr/selectableItemBackground" />
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:padding="16dp"
-        android:drawablePadding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:elevation="4dp"
-        android:stateListAnimator="@null"
-        android:foreground="?attr/selectableItemBackground" />
-
-    <Button
-        android:id="@+id/btnTeachersRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Teachers Register"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:padding="16dp"
-        android:drawablePadding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/btnRegister"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:elevation="4dp"
-        android:stateListAnimator="@null"
-        android:foreground="?attr/selectableItemBackground" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="#4CAF50"
+            android:elevation="2dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Login"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="#2196F3"
+            android:elevation="2dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Student Registration"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnTeachersRegister"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="#FF9800"
+            android:elevation="2dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Teacher Registration"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,106 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddQuestionsActivity">
+    android:background="#F5F7FA">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="23dp"
-        android:text="הוספת שאלה לסקר"
-        app:layout_constraintEnd_toStartOf="@+id/tvSurveyTitleAddQ"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="16dp"
+        tools:context=".AddQuestionsActivity">
 
-    <TextView
-        android:id="@+id/tvSurveyTitleAddQ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="73dp"
-        android:layout_marginEnd="36dp"
-        android:text="שם הסקר"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvSurveyCategoryAddQ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
-        android:text="קטגוריה"
-        app:layout_constraintBottom_toTopOf="@+id/etQuestionTextAddQ"
-        app:layout_constraintStart_toStartOf="@+id/etQuestionTextAddQ" />
-
-    <EditText
-        android:id="@+id/etQuestionTextAddQ"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="61dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="61dp"
-        android:hint="Enter question text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSurveyTitleAddQ" />
-
-    <LinearLayout
-        android:id="@+id/optionsContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etQuestionTextAddQ">
-
-        <!-- LinearLayout for the EditText and + Button -->
         <LinearLayout
+            android:id="@+id/headerSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:background="#2E7D8A"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <EditText
-                android:id="@+id/etQuestionOption1AddQ"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Enter option 1" />
+                android:text="הוספת שאלה לסקר"
+                android:textSize="24sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif-medium" />
 
-            <Button
-                android:id="@+id/btnCreateNewOption"
-                android:layout_width="80dp"
-                android:layout_height="45dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:text="+" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvSurveyTitleAddQ"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="שם הסקר"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:id="@+id/tvSurveyCategoryAddQ"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="קטגוריה"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/questionSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/headerSection"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    <Button
-        android:id="@+id/btnSaveQ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginBottom="36dp"
-        android:text="שמור וצא"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="שם השאלה:"
+                android:textSize="16sp"
+                android:textColor="#37474F"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-medium" />
 
-    <Button
-        android:id="@+id/btnNewQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="36dp"
-        android:text="שאלה נוספת"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <EditText
+                android:id="@+id/etQuestionTextAddQ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="הכנס את שם השאלה כאן"
+                android:background="#F8F9FA"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:textColor="#37474F"
+                android:minHeight="48dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/optionsSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/questionSection"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="תשובות אפשריות:"
+                    android:textSize="16sp"
+                    android:textColor="#37474F"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium" />
+
+                <Button
+                    android:id="@+id/btnCreateNewOption"
+                    android:layout_width="56dp"
+                    android:layout_height="48dp"
+                    android:text="+"
+                    android:textSize="20sp"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#4CAF50"
+                    android:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/optionsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintTop_toBottomOf="@id/optionsSection"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/btnSaveQ"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="שמור וצא"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:backgroundTint="#FF9800"
+                android:fontFamily="sans-serif-medium" />
+
+            <Button
+                android:id="@+id/btnNewQuestion"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="שאלה נוספת"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:backgroundTint="#2196F3"
+                android:fontFamily="sans-serif-medium" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -182,15 +182,6 @@
                     android:textColor="#FFFFFF" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtFooter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="Ariel Surveys App"
-                android:textColor="#9E9E9E"
-                android:textSize="12sp" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

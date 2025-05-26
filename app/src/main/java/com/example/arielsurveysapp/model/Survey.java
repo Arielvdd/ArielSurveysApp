@@ -9,8 +9,8 @@ public class Survey  implements Serializable {
     private String id;
     private String category;
     private String title;
-    private String targetGrade;  // מספרי כיתות
-    private String targetSection; // שכבות
+    private String targetGrade;  // רשימת הכיתות
+    private String targetSection; //שכבות - לא בשימוש
     private String description;
     private List<Question> questions;
 

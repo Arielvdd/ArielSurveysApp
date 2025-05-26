@@ -51,6 +51,8 @@ public class StudentDashboardActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View v) {
         if(v==myDetailsBtn){
+            Intent go = new Intent(StudentDashboardActivity.this, UserDetails.class);
+            startActivity(go);
 
 
 
