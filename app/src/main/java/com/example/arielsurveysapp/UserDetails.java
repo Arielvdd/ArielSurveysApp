@@ -1,6 +1,8 @@
 package com.example.arielsurveysapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.credentials.CredentialManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +20,11 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.arielsurveysapp.model.Student;
 import com.example.arielsurveysapp.model.Teacher;
 import com.example.arielsurveysapp.model.User;
+import com.example.arielsurveysapp.services.AuthenticationService;
 import com.example.arielsurveysapp.services.DatabaseService;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class UserDetails extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,6 +38,10 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     private User currentUser;
     private DatabaseService databaseService;
 
+    AuthenticationService authenticationService;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +49,17 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_user_details);
 
         initViews();
+        userType=LoginActivity.userType;
+        authenticationService=AuthenticationService.getInstance();
+
+
+        userId=authenticationService.getCurrentUserId();
+
+
+
         databaseService = DatabaseService.getInstance();
+
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -47,15 +67,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             return insets;
         });
 
-        Intent intent = getIntent();
-        userId = intent.getStringExtra("userId");
-        userType = intent.getStringExtra("userType");
 
-        if (userId == null || userType == null) {
-            Toast.makeText(this, "שגיאה: מידע משתמש חסר", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
 
         loadUserData();
     }
@@ -81,7 +93,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     }
 
     private void loadUserData() {
-        if ("student".equals(userType)) {
+
+        if (userType.equals("student")) {
             databaseService.getStudent(userId, new DatabaseService.DatabaseCallback<Student>() {
                 @Override
                 public void onCompleted(Student student) {
@@ -92,7 +105,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                         tvStudentClass.setText(student.getStudentClass());
                         tvSection.setText(student.getSection());
                     } else {
-                        Toast.makeText(UserDetails.this, "לא נמצא מידע על התלميד", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserDetails.this, "לא נמצא מידע על התלמיד", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }
@@ -103,7 +116,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                     finish();
                 }
             });
-        } else if ("teacher".equals(userType)) {
+        } else {
+
             databaseService.getTeacher(userId, new DatabaseService.DatabaseCallback<Teacher>() {
                 @Override
                 public void onCompleted(Teacher teacher) {
@@ -125,6 +139,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             });
         }
     }
+
 
     private void populateUserData(User user) {
         tvFirstName.setText(user.getfName());
@@ -150,7 +165,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         String newPassword = etPassword.getText().toString().trim();
 
         if (newEmail.isEmpty()) {
-            Toast.makeText(this, "אימייל לא יכול להיות רק", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "אימייל לא יכול להיות ריק", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -172,32 +187,76 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         currentUser.setEmail(newEmail);
         currentUser.setPassword(newPassword);
 
+        ChangePassword( newEmail);
+
         if ("student".equals(userType)) {
             databaseService.createNewStudent((Student) currentUser, new DatabaseService.DatabaseCallback<Void>() {
                 @Override
-                public void onCompleted(Void aVoid) {
+        public void onCompleted(Void aVoid) {
                     Toast.makeText(UserDetails.this, "פרטי התלמיד עודכנו בהצלחה", Toast.LENGTH_SHORT).show();
+
                     finish();
                 }
 
                 @Override
                 public void onFailed(Exception e) {
-                    Toast.makeText(UserDetails.this, "שגיאה בעדכון פרטי התלמיד: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    databaseService.createNewStudent((Student) currentUser, new DatabaseService.DatabaseCallback<Void>() {
+                        @Override
+                        public void onCompleted(Void aVoid) {
+                            Toast.makeText(UserDetails.this, "פרטי התלמיד עודכנו בהצלחה", Toast.LENGTH_SHORT).show();
+
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailed(Exception e) {
+                            Toast.makeText(UserDetails.this, "שגיאה בעדכון פרטי התלמיד: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             });
-        } else if ("teacher".equals(userType)) {
+        } else {
             databaseService.createNewTeacher((Teacher) currentUser, new DatabaseService.DatabaseCallback<Void>() {
                 @Override
                 public void onCompleted(Void aVoid) {
                     Toast.makeText(UserDetails.this, "פרטי המורה עודכנו בהצלחה", Toast.LENGTH_SHORT).show();
+
                     finish();
                 }
 
                 @Override
                 public void onFailed(Exception e) {
-                    Toast.makeText(UserDetails.this, "שגיאה בעדכון פרטי המורה: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    databaseService.createNewTeacher((Teacher) currentUser, new DatabaseService.DatabaseCallback<Void>() {
+                        @Override
+                        public void onCompleted(Void aVoid) {
+                            Toast.makeText(UserDetails.this, "פרטי המורה עודכנו בהצלחה", Toast.LENGTH_SHORT).show();
+
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailed(Exception e) {
+                            Toast.makeText(UserDetails.this, "שגיאה בעדכון פרטי המורה: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             });
         }
+    }
+
+
+
+
+
+    public void ChangePassword(String email){
+
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(UserDetails.this, "Reset email sent", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(UserDetails.this, "Failed to send reset email", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

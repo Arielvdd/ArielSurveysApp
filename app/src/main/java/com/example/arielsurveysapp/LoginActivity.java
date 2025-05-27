@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText etEmail, etPassword;
     Button btnLog;
-    FirebaseAuth mAuth;
+
     User user=null;
 
 
@@ -35,12 +35,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    public static  String userType = "";
+
     private static final String TAG = "loginToFireBase";
 
-    public static Student student=null;
+    public  Student student=null;
 
     public static Boolean isAdmin=false;
-    public  static  Teacher teacher=null;
+    public    Teacher teacher=null;
     private AuthenticationService authenticationService;
     private DatabaseService databaseService;
 
@@ -80,6 +82,11 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please enter email and password", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(email.equals("admin@admin.com") && password.equals("123456"))
+        {
+            Intent go = new Intent(this, AdminDashboardActivity.class);
+            startActivity(go);
+        }
         authenticationService.signIn(email, password, new AuthenticationService.AuthCallback<String>() {
             /// Callback method called when the operation is completed
             ///
@@ -105,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                                     if (teacher != null) {
+
                                         SharedPreferencesUtil.saveUser(LoginActivity.this, teacher);
                                         startActivity(mainIntent);
 
@@ -122,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 Log.d(TAG, "onCompleted: User data retrieved successfully");
                                                 /// save the user data to shared preferences
                                                 SharedPreferencesUtil.saveUser(LoginActivity.this, student);
+                                                userType="student";
                                                 /// Redirect to main activity and clear back stack to prevent user from going back to login screen
                                                 Intent mainIntent = new Intent(LoginActivity.this, StudentDashboardActivity.class);
                                                 /// Clear the back stack (clear history) and start the MainActivity

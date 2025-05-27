@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.arielsurveysapp.AdminDashboardActivity;
 import com.example.arielsurveysapp.AssignedSurveysActivity;
 import com.example.arielsurveysapp.R;
 import com.example.arielsurveysapp.ShowSurveyActivity;
@@ -52,6 +53,11 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyView
             }
 
             if((context) instanceof SurveysActivity) {
+                Intent intent = new Intent(context, SurveyStatsActivity.class);
+                intent.putExtra("surveyId", survey.getId());
+                context.startActivity(intent);
+            }
+            if((context) instanceof AdminDashboardActivity) {
                 Intent intent = new Intent(context, SurveyStatsActivity.class);
                 intent.putExtra("surveyId", survey.getId());
                 context.startActivity(intent);

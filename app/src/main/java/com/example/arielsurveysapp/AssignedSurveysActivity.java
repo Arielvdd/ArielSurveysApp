@@ -75,6 +75,7 @@ public class AssignedSurveysActivity extends AppCompatActivity {
                 for (Survey survey : allSurveys) {
 
 
+
                         if (survey.getTargetGrade() != null) {
                             if (survey.getTargetGrade().contains(fullClass) || survey.getTargetGrade().contains(entireClass))
                                 assignedSurveys.add(survey);

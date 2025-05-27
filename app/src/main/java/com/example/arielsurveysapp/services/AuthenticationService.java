@@ -3,6 +3,7 @@ package com.example.arielsurveysapp.services;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -102,6 +103,16 @@ public class AuthenticationService {
         }
         return mAuth.getCurrentUser().getUid();
     }
+
+
+    public FirebaseUser getCurrentUser() {
+        if (mAuth.getCurrentUser() == null) {
+            return null;
+        }
+        return mAuth.getCurrentUser();
+    }
+
+
 
     /// check if a user is signed in
     /// @return true if a user is signed in, false otherwise
