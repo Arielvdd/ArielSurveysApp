@@ -41,6 +41,16 @@ public class DatabaseService {
         });
     }
 
+    private void removeData(final String path,  final DatabaseCallback<Void> callback) {
+        databaseReference.child(path).removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (callback != null) callback.onCompleted(null);
+            } else {
+                if (callback != null) callback.onFailed(task.getException());
+            }
+        });
+    }
+
     private DatabaseReference readData(final String path) {
         return databaseReference.child(path);
     }
@@ -199,6 +209,22 @@ public class DatabaseService {
             callback.onCompleted(surveys);
         });
     }
+    public void getSurveysByStatus( String  status,final DatabaseCallback<List<Survey>> callback) {
+        readData("surveys").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                callback.onFailed(task.getException());
+                return;
+            }
+            List<Survey> surveys = new ArrayList<>();
+            task.getResult().getChildren().forEach(dataSnapshot -> {
+                Survey survey = dataSnapshot.getValue(Survey.class);
+                if(survey.getStatus().equals(status)) {
+                    surveys.add(survey);
+                }
+            });
+            callback.onCompleted(surveys);
+        });
+    }
 
 
     public void getAllSurveysForAdmin(final DatabaseCallback<List<Survey>> callback) {
@@ -217,6 +243,12 @@ public class DatabaseService {
             callback.onCompleted(surveys);
         });
     }
+
+
+    public void removeQuestion(final String surveyId, final String questionId, final DatabaseCallback<Void> callback) {
+        removeData("surveys/" + surveyId + "/questions" + questionId,  callback);
+    }
+
     public void getQuestionsForSurvey(@NotNull final String surveyId, @NotNull final DatabaseCallback<List<Question>> callback) {
         readData("surveys/" + surveyId + "/questions").get().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {

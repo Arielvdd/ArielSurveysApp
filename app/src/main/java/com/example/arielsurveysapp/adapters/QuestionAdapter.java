@@ -1,5 +1,7 @@
 package com.example.arielsurveysapp.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,8 +15,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.arielsurveysapp.AssignedSurveysActivity;
+import com.example.arielsurveysapp.EditSurvey;
 import com.example.arielsurveysapp.R;
+import com.example.arielsurveysapp.ShowSurveyActivity;
 import com.example.arielsurveysapp.model.Question;
+import com.example.arielsurveysapp.model.Survey;
+import com.example.arielsurveysapp.services.DatabaseService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,11 +30,28 @@ import java.util.List;
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
     private final List<Question> questions;
     private final List<String> answers;
+    private Context context;
+    private Survey survery;
 
 
-    public QuestionAdapter(List<Question> questions) {
+//    public QuestionAdapter(List<Question> questions) {
+//        this.questions = questions;
+//        this.answers = new ArrayList<>(Collections.nCopies(questions.size(), ""));
+//    }
+
+    public QuestionAdapter(List<Question> questions,  Context context) {
         this.questions = questions;
         this.answers = new ArrayList<>(Collections.nCopies(questions.size(), ""));
+        this.context = context;
+    }
+
+    public QuestionAdapter(List<Question> questions,  Context context, Survey survery) {
+        this.questions = questions;
+        if(questions!=null) {
+            this.answers = new ArrayList<>(Collections.nCopies(questions.size(), ""));
+        }
+        this.context = context;
+        this.survery = survery;
     }
 
     public List<String> getUserAnswers() {
@@ -49,6 +73,33 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
        // holder.rgOptions.setVisibility(View.GONE);
       //  holder.etOpenAnswer.setVisibility(View.GONE);
       //  holder.rgOptions.removeAllViews();
+
+       holder.itemView.setOnClickListener(v -> {
+            if ((context) instanceof EditSurvey) {
+
+
+                questions.remove(position);
+
+
+               DatabaseService  databaseService= DatabaseService.getInstance();
+               databaseService.updateSurvey(survery,  new DatabaseService.DatabaseCallback<Void>() {
+                   @Override
+                   public void onCompleted(Void object) {
+
+                      // this.notify();
+
+                   }
+
+                   @Override
+                   public void onFailed(Exception e) {
+
+                   }
+               });
+            }
+        });
+
+
+
 
         if (question.getOptions() != null && !question.getOptions().isEmpty()) {
             holder.rgOptions.setVisibility(View.VISIBLE);
@@ -99,6 +150,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             tvQuestionText = itemView.findViewById(R.id.tvQuestionText);
             rgOptions = itemView.findViewById(R.id.rgOptions);
             etOpenAnswer = itemView.findViewById(R.id.etOpenAnswer);
+
         }
     }
 

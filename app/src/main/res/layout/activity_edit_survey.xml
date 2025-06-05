@@ -1,147 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditSurvey">
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <TextView
-        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="170dp"
-        tools:layout_editor_absoluteY="16dp" />
-
+        android:text="Edit Survey"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+       />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        >
 
     <EditText
-        android:id="@+id/etTitle"
+        android:id="@+id/etTitleEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#C6B0B0"
         android:hint="Title"
         android:padding="12dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="35dp" />
 
-    <EditText
-        android:id="@+id/etCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#C6B0B0"
-        android:hint="Category"
-        android:padding="12dp"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="95dp" />
+        android:background="#C6B0B0" />
+
+        <EditText
+            android:id="@+id/etCategoryEdit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#C6B0B0"
+            android:hint="Category"
+            android:padding="12dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:gravity="center_vertical"
+        android:weightSum="2"
+        android:layout_marginTop="8dp">
 
         <!-- Class -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="8dp">
+
+            <TextView
+                android:id="@+id/tvStudentClassEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class"
+                android:textColor="#333333"
+                android:textSize="16sp"/>
+
+            <Spinner
+                android:id="@+id/spinnerClassEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/arrClass" />
+        </LinearLayout>
 
         <!-- Section -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="8dp">
+
+            <TextView
+                android:id="@+id/tvSectionEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Section"
+                android:textColor="#333333"
+                android:textSize="16sp"/>
+
+            <Spinner
+                android:id="@+id/spinnerSectionEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/arrSection" />
+
+        </LinearLayout>
     </LinearLayout>
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAddEdit"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ADD"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="221dp" />
+        android:text="ADD" />
 
     <EditText
-        android:id="@+id/etSelectedClasses"
+        android:id="@+id/etSelectedClassesEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="Selected:"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="269dp" />
+        android:text="Selected:" />
+
 
     <EditText
-        android:id="@+id/etDescription"
-        android:layout_width="411dp"
-        android:layout_height="36dp"
-        android:background="#C6B0B0"
-        android:gravity="top"
+        android:id="@+id/etDescriptionEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:hint="Description"
-        android:inputType="textMultiLine"
-        android:minHeight="100dp"
         android:padding="12dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="336dp" />
+        android:background="#C6B0B0"
+        android:minHeight="100dp"
+        android:gravity="top"
+        android:inputType="textMultiLine" />
 
-    <Spinner
-        android:id="@+id/spinnerClass"
-        android:layout_width="123dp"
-        android:layout_height="22dp"
-        android:entries="@array/arrClass"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="176dp" />
-
-    <LinearLayout
-        android:layout_width="5dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingEnd="8dp"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="269dp">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/btnNextEdit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingStart="8dp"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="562dp">
+        android:text="Next"
+        android:backgroundTint="#3F51B5"
+        android:textColor="@color/white"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"/>
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvStudentClass"
-        android:layout_width="wrap_content"
+    <Switch
+        android:id="@+id/switchPublishEdit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Class"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="144dp" />
+        android:text="פרסם סקר" />
 
-    <TextView
-        android:id="@+id/tvSection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Section"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        tools:layout_editor_absoluteX="291dp"
-        tools:layout_editor_absoluteY="156dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcQuestionsEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <Spinner
-        android:id="@+id/spinnerSection"
-        android:layout_width="192dp"
-        android:layout_height="21dp"
-        android:entries="@array/arrSection"
-        tools:layout_editor_absoluteX="193dp"
-        tools:layout_editor_absoluteY="187dp" />
-
-    <ListView
-        android:layout_width="361dp"
-        android:layout_height="234dp"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="381dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

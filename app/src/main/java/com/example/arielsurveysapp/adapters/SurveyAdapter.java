@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.arielsurveysapp.AdminDashboardActivity;
 import com.example.arielsurveysapp.AssignedSurveysActivity;
+import com.example.arielsurveysapp.EditSurvey;
 import com.example.arielsurveysapp.R;
 import com.example.arielsurveysapp.ShowSurveyActivity;
 import com.example.arielsurveysapp.SurveyStatsActivity;
@@ -53,9 +54,22 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyView
             }
 
             if((context) instanceof SurveysActivity) {
-                Intent intent = new Intent(context, SurveyStatsActivity.class);
-                intent.putExtra("surveyId", survey.getId());
-                context.startActivity(intent);
+                if(survey.getStatus().equals("close")) {
+                    Intent intent = new Intent(context, SurveyStatsActivity.class);
+
+                    intent.putExtra("surveyId", survey.getId());
+                    context.startActivity(intent);
+                }
+                else {
+                    if(survey.getStatus().equals("open")) {
+                        Intent intent = new Intent(context, EditSurvey.class);
+
+                        intent.putExtra("surveyId", survey.getId());
+                        context.startActivity(intent);
+                    }
+                }
+
+
             }
             if((context) instanceof AdminDashboardActivity) {
                 Intent intent = new Intent(context, SurveyStatsActivity.class);

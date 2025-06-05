@@ -84,7 +84,7 @@ public class ShowSurveyActivity extends AppCompatActivity {
                         tvSurveyTitle.setText(survey.getTitle());
                         tvSurveyDescription.setText(survey.getDescription());
                         questions = (ArrayList<Question>) survey.getQuestions();
-                        questionAdapter = new QuestionAdapter(questions);
+                        questionAdapter = new QuestionAdapter(questions,ShowSurveyActivity.this);
                         recyclerViewQuestions.setAdapter(questionAdapter);
                     }
                 }

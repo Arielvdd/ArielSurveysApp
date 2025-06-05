@@ -32,12 +32,15 @@ public class TeacherDashboardActivity extends AppCompatActivity implements View.
 
         if (v.getId() == R.id.btnCreateSurvey) {
             intent = new Intent(this, CreateSurveyActivity.class);
+
         } else if (v.getId() == R.id.btnViewSurveys) {
             intent = new Intent(this, SurveysActivity.class);
+            intent.putExtra("status", "close");
         } else if (v.getId() == R.id.btnViewUsers) {
             intent = new Intent(this, UsersActivity.class);
         } else if (v.getId() == R.id.btnPublishSurveys) {
-            intent = new Intent(this, MainActivity.class);
+            intent = new Intent(this, SurveysActivity.class);
+            intent.putExtra("status", "open");
         }
 
         if (intent != null) {
