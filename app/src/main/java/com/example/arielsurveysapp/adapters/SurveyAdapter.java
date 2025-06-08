@@ -53,7 +53,7 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.SurveyView
                 context.startActivity(intent);
             }
 
-            if((context) instanceof SurveysActivity) {
+            if((context) instanceof SurveysActivity || (context) instanceof AdminDashboardActivity) {
                 if(survey.getStatus().equals("close")) {
                     Intent intent = new Intent(context, SurveyStatsActivity.class);
 

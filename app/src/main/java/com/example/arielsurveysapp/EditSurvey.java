@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.arielsurveysapp.adapters.QuestionAdapter;
+import com.example.arielsurveysapp.adapters.QuestionEditAdapter;
 import com.example.arielsurveysapp.model.Question;
 import com.example.arielsurveysapp.model.Survey;
 import com.example.arielsurveysapp.services.DatabaseService;
@@ -36,16 +37,16 @@ public class EditSurvey extends AppCompatActivity {
     Survey survey = null;
     String surveyId;
     private RecyclerView recyclerViewQuestions;
-    private QuestionAdapter questionAdapter;
+    private QuestionEditAdapter questionAdapter;
     private ArrayList<Question> questions = new ArrayList<>();
 
 
 
 
     private EditText etTitleEdit, etCategoryEdit, etDescriptionEdit, etSelectedClassesEdit;
-    private Button btnAdd, btnNext;
+    private Button btnAdd, btnNext, btnPublish;
     private Spinner spinnerSection,spinnerClass;
-    Switch publishSwitchEdit;
+
     private List<String> selectedClassesList = new ArrayList<>();
 
     @Override
@@ -63,6 +64,7 @@ public class EditSurvey extends AppCompatActivity {
 
         if (surveyId != null) {
             loadSurvey(surveyId);
+
         }
 
 
@@ -79,6 +81,21 @@ public class EditSurvey extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateSurvey();
+                Intent intent = new Intent(EditSurvey.this, AddQuestionsActivity.class);
+                intent.putExtra("surveyId", surveyId);
+                intent.putExtra("survey", survey);
+                startActivity(intent);
+            }
+        });
+
+        btnPublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                survey.setStatus("close");
+                updateSurvey();
+                Intent go = new Intent(EditSurvey.this,TeacherDashboardActivity.class);
+                Toast.makeText(EditSurvey.this, "The survey is published.", Toast.LENGTH_SHORT).show();
+                startActivity(go);
             }
         });
 
@@ -127,19 +144,13 @@ public class EditSurvey extends AppCompatActivity {
         survey.setDescription(description);
         survey.setTargetGrade(classes);
         survey.setTitle(title);
-        if(publishSwitchEdit.isChecked())
-            survey.setStatus("close");
-        else
-            survey.setStatus("open");
+
 
 
         databaseService.updateSurvey(survey, new DatabaseService.DatabaseCallback<Void>() {
             @Override
             public void onCompleted(Void object) {
-                Intent intent = new Intent(EditSurvey.this, AddQuestionsActivity.class);
-                intent.putExtra("surveyId", surveyId);
-                intent.putExtra("survey", survey);
-                startActivity(intent);
+
             }
 
             @Override
@@ -165,7 +176,7 @@ public class EditSurvey extends AppCompatActivity {
         spinnerSection = findViewById(R.id.spinnerSectionEdit);
         btnAdd = findViewById(R.id.btnAddEdit);
         btnNext = findViewById(R.id.btnNextEdit);
-        publishSwitchEdit = findViewById(R.id.switchPublishEdit);
+        btnPublish = findViewById(R.id.btnPublish);
         recyclerViewQuestions=findViewById(R.id.rcQuestionsEdit);
         recyclerViewQuestions.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -180,12 +191,10 @@ public class EditSurvey extends AppCompatActivity {
                     etCategoryEdit.setText(survey.getCategory());
                     etDescriptionEdit.setText(survey.getDescription());
                     etSelectedClassesEdit.setText(survey.getTargetGrade());
-                    publishSwitchEdit.setChecked(true);
+
                     questions = (ArrayList<Question>) survey.getQuestions();
-                    questionAdapter = new QuestionAdapter(questions,EditSurvey.this,survey);
+                    questionAdapter = new QuestionEditAdapter(questions,EditSurvey.this,survey);
                     recyclerViewQuestions.setAdapter(questionAdapter);
-
-
 
                 }
             }

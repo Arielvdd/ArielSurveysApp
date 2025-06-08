@@ -29,9 +29,8 @@ import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
     private final List<Question> questions;
-    private final List<String> answers;
-    private Context context;
-    private Survey survery;
+    private  List<String> answers;
+
 
 
 //    public QuestionAdapter(List<Question> questions) {
@@ -39,10 +38,17 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 //        this.answers = new ArrayList<>(Collections.nCopies(questions.size(), ""));
 //    }
 
-    public QuestionAdapter(List<Question> questions,  Context context) {
+
+    public QuestionAdapter(List<Question> questions, List<String> answers, Context context, Survey survery) {
+        this.questions = questions;
+        this.answers = answers;
+
+    }
+
+    public QuestionAdapter(List<Question> questions) {
         this.questions = questions;
         this.answers = new ArrayList<>(Collections.nCopies(questions.size(), ""));
-        this.context = context;
+
     }
 
     public QuestionAdapter(List<Question> questions,  Context context, Survey survery) {
@@ -50,8 +56,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         if(questions!=null) {
             this.answers = new ArrayList<>(Collections.nCopies(questions.size(), ""));
         }
-        this.context = context;
-        this.survery = survery;
+
     }
 
     public List<String> getUserAnswers() {
@@ -70,33 +75,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         Question question = questions.get(position);
         holder.tvQuestionText.setText((position + 1) + ". " + question.getQuestionText());
 
-       // holder.rgOptions.setVisibility(View.GONE);
-      //  holder.etOpenAnswer.setVisibility(View.GONE);
-      //  holder.rgOptions.removeAllViews();
-
-       holder.itemView.setOnClickListener(v -> {
-            if ((context) instanceof EditSurvey) {
 
 
-                questions.remove(position);
-
-
-               DatabaseService  databaseService= DatabaseService.getInstance();
-               databaseService.updateSurvey(survery,  new DatabaseService.DatabaseCallback<Void>() {
-                   @Override
-                   public void onCompleted(Void object) {
-
-                      // this.notify();
-
-                   }
-
-                   @Override
-                   public void onFailed(Exception e) {
-
-                   }
-               });
-            }
-        });
 
 
 

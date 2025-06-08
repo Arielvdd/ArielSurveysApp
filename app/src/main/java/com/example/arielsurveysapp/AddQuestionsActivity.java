@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AddQuestionsActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddQuestionsActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView tvSurveyTitleAddQ, tvSurveyCategoryAddQ;
     private EditText etQuestionTextAddQ;

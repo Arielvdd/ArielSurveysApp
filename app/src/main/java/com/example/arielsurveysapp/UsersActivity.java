@@ -11,7 +11,7 @@ import com.example.arielsurveysapp.services.DatabaseService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersActivity extends AppCompatActivity {
+public class UsersActivity extends BaseActivity {
 
     private static final String TAG = "UsersActivity";
     private DatabaseService databaseService;

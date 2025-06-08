@@ -12,4 +12,10 @@
         android:id="@+id/action_about"
         android:title="About"
         android:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:showAsAction="ifRoom" />
+
 </menu>

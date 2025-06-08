@@ -44,7 +44,7 @@ public class SurveyActivity extends AppCompatActivity {
 
         rvQuestions.setLayoutManager(new LinearLayoutManager(this));
         questionList = new ArrayList<>();
-        questionAdapter = new QuestionAdapter(questionList, SurveyActivity.this);
+        questionAdapter = new QuestionAdapter(questionList);
         rvQuestions.setAdapter(questionAdapter);
 
         surveyId = getIntent().getStringExtra("surveyId");

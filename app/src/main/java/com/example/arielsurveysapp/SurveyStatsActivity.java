@@ -60,14 +60,19 @@ public class SurveyStatsActivity extends AppCompatActivity {
         databaseService.getSurveyResults(surveyId, new DatabaseService.DatabaseCallback<SurveyResult>() {
             @Override
             public void onCompleted(SurveyResult surveyResult) {
-                for (List<String> aggregatedAnswer : surveyResult.getAggregatedAnswers()) {
-                    HashMap<String, Integer> arrayCounter = new HashMap<>();
-                    for (String answer : aggregatedAnswer) {
-                        arrayCounter.put(answer, arrayCounter.getOrDefault(answer, 0) + 1);
+
+                if(surveyResult != null) {
+
+
+                    for (List<String> aggregatedAnswer : surveyResult.getAggregatedAnswers()) {
+                        HashMap<String, Integer> arrayCounter = new HashMap<>();
+                        for (String answer : aggregatedAnswer) {
+                            arrayCounter.put(answer, arrayCounter.getOrDefault(answer, 0) + 1);
+                        }
+                        questionStats.add(arrayCounter);
                     }
-                    questionStats.add(arrayCounter);
+                    ShowQuestions();
                 }
-                ShowQuestions();
             }
 
             @Override

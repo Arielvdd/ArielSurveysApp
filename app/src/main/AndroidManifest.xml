@@ -13,10 +13,11 @@
         android:theme="@style/Theme.ArielSurveysApp"
         tools:targetApi="31">
         <activity
-            android:name=".ShowQuestionsForEdit"
-            android:exported="false" />
+            android:name=".BaseActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ArielSurveysApp" />
         <activity
-            android:name=".SurveysListForChanges"
+            android:name=".ShowQuestionsForEdit"
             android:exported="false" />
         <activity
             android:name=".AdminDashboardActivity"
@@ -50,10 +51,6 @@
             android:exported="false" />
         <activity
             android:name=".CreateSurveyActivity"
-            android:exported="false"
-            android:theme="@style/Theme.ArielSurveysApp" />
-        <activity
-            android:name=".SurveyDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.ArielSurveysApp" />
         <activity

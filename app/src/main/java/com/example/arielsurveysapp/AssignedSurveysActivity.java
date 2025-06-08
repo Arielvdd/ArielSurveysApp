@@ -21,7 +21,7 @@ import com.example.arielsurveysapp.services.DatabaseService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssignedSurveysActivity extends AppCompatActivity {
+public class AssignedSurveysActivity extends BaseActivity {
 
     private RecyclerView recyclerViewAssignedSurveys;
     private SurveyAdapter surveyAdapter;

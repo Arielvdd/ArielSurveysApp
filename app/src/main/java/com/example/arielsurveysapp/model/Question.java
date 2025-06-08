@@ -1,9 +1,10 @@
 package com.example.arielsurveysapp.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class Question {
+public class Question implements Serializable {
     private String id;
     private String questionText;
     private List<String> options;

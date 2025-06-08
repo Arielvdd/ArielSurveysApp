@@ -13,6 +13,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.arielsurveysapp.services.AuthenticationService;
+
 public class StudentDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView titleTextView;
@@ -62,8 +64,8 @@ public class StudentDashboardActivity extends AppCompatActivity implements View.
         }
 
         if(v == logoutBtn){
-            getSharedPreferences("UserPrefs", MODE_PRIVATE).edit().clear().apply();
-
+           // getSharedPreferences("UserPrefs", MODE_PRIVATE).edit().clear().apply();
+            AuthenticationService.getInstance().signOut();
             Intent intent = new Intent(StudentDashboardActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
