@@ -26,11 +26,10 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class UserDetails extends AppCompatActivity implements View.OnClickListener {
+public class UserDetails extends BaseActivity implements View.OnClickListener {
 
-    private TextView tvFirstName, tvLastName, tvGender, tvPhone, tvStudentClass, tvSection;
-    private EditText etEmail, etPassword;
-    private Button btnSave, btnCancel;
+    private TextView tvFirstName, tvLastName, tvGender, tvPhone, tvStudentClass, tvSection, tvEmail;
+    private Button btnSave, btnCancel, btnResetPassword;
     private LinearLayout studentInfoLayout;
 
     private String userId;
@@ -79,17 +78,17 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         tvPhone = findViewById(R.id.tvPhone);
         tvStudentClass = findViewById(R.id.tvStudentClass);
         tvSection = findViewById(R.id.tvSection);
-
-        etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
+        tvEmail = findViewById(R.id.tvEmail);
 
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
+        btnResetPassword = findViewById(R.id.btnResetPassword);
 
         studentInfoLayout = findViewById(R.id.studentInfoLayout);
 
         btnSave.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        btnResetPassword.setOnClickListener(this);
     }
 
     private void loadUserData() {
@@ -146,9 +145,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         tvLastName.setText(user.getlName());
         tvGender.setText(user.getGender());
         tvPhone.setText(user.getPhone());
-
-        etEmail.setText(user.getEmail());
-        etPassword.setText(user.getPassword());
+        tvEmail.setText(user.getEmail());
     }
 
     @Override
@@ -157,42 +154,16 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             saveUserChanges();
         } else if (v == btnCancel) {
             finish();
+        } else if (v == btnResetPassword) {
+            ChangePassword(currentUser.getEmail());
         }
     }
 
     private void saveUserChanges() {
-        String newEmail = etEmail.getText().toString().trim();
-        String newPassword = etPassword.getText().toString().trim();
-
-        if (newEmail.isEmpty()) {
-            Toast.makeText(this, "אימייל לא יכול להיות ריק", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (newPassword.isEmpty()) {
-            Toast.makeText(this, "סיסמה לא יכולה להיות ריקה", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (newPassword.length() < 6) {
-            Toast.makeText(this, "סיסמה חייבת להכיל לפחות 6 תווים", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()) {
-            Toast.makeText(this, "כתובת אימייל לא תקינה", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        currentUser.setEmail(newEmail);
-        currentUser.setPassword(newPassword);
-
-        ChangePassword( newEmail);
-
         if ("student".equals(userType)) {
             databaseService.createNewStudent((Student) currentUser, new DatabaseService.DatabaseCallback<Void>() {
                 @Override
-        public void onCompleted(Void aVoid) {
+                public void onCompleted(Void aVoid) {
                     Toast.makeText(UserDetails.this, "פרטי התלמיד עודכנו בהצלחה", Toast.LENGTH_SHORT).show();
 
                     finish();
@@ -243,10 +214,6 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             });
         }
     }
-
-
-
-
 
     public void ChangePassword(String email){
 

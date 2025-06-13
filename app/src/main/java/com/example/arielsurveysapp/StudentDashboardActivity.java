@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.arielsurveysapp.services.AuthenticationService;
 
-public class StudentDashboardActivity extends AppCompatActivity implements View.OnClickListener {
+public class StudentDashboardActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView titleTextView;
     private Button mySurveysBtn, myDetailsBtn, logoutBtn;

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CreateSurveyActivity extends AppCompatActivity {
+public class CreateSurveyActivity extends TeacherBaseActivity {
     private EditText etCategory, etTitle, etDescription, etSelectedClasses;
     private Spinner spinnerClass, spinnerSection;
     private Button btnNext, btnAdd;

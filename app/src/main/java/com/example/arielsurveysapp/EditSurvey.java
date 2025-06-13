@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EditSurvey extends AppCompatActivity {
+public class EditSurvey extends TeacherBaseActivity {
 
     Intent takeit;
     DatabaseService databaseService;

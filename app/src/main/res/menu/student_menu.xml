@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <item
-        android:id="@+id/action_settings"
-        android:title="Settings"
-        android:icon="@android:drawable/ic_menu_preferences"
+        android:id="@+id/action_my_details"
+        android:title="My Details"
+        android:icon="@android:drawable/ic_menu_myplaces"
         android:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_about"
-        android:title="About"
-        android:showAsAction="never" />
+        android:id="@+id/action_my_surveys"
+        android:title="My Surveys"
+        android:icon="@android:drawable/ic_menu_view"
+        android:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_logout"
         android:title="Logout"

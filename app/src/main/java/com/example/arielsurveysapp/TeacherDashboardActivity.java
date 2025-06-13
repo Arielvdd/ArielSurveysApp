@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TeacherDashboardActivity extends AppCompatActivity implements View.OnClickListener {
+public class TeacherDashboardActivity extends TeacherBaseActivity implements View.OnClickListener {
 
     private Button btnViewUsers, btnViewSurveys, btnCreateSurvey, btnPublishSurveys;
 
